@@ -1,5 +1,5 @@
 import 'package:flutter_craft/app/base_app/base_view_model.dart';
-import 'package:flutter_craft/app/module/weather/controller/WeatherViewModel.dart';
+import 'package:flutter_craft/app/module/weather/controller/weather_view_model.dart';
 import 'package:provider/provider.dart';
 
 class ProviderPath {

@@ -12,10 +12,10 @@ class WeatherRemoteSourceImpl extends BaseRemoteSource
     implements WeatherRemoteSource {
   @override
   Future<WeatherResponseModel> getSevenDaysWeather(WeatherParams queryParams) {
-    log('post data ${queryParams}');
+    log('post data $queryParams');
 
     var endpoint = weatherBaseUrl;
-    var dioCall = Dio().get(endpoint, queryParameters: queryParams.toJson());
+    var dioCall = dioCli.get(endpoint, queryParameters: queryParams.toJson());
 
     try {
       return callApiWithErrorParser(dioCall)
@@ -27,7 +27,7 @@ class WeatherRemoteSourceImpl extends BaseRemoteSource
 
   WeatherResponseModel _parseSevenDaysWeatherResponse(
       Response<dynamic> response) {
-    log(' Weather response  ${response}');
+    log(' Weather response  $response');
     var result = WeatherResponseModel.fromJson(response.data);
     return result;
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_craft/app/core/values/app_gradients.dart';
 
 import 'app_colors.dart';
 import 'text_style.dart';
@@ -34,4 +35,14 @@ Decoration get tabBarIndicatorStyle => BoxDecoration(
 Decoration get tabBarBoxDecorationStyle => BoxDecoration(
       color: AppColors.neutral100,
       borderRadius: BorderRadius.circular(7.0),
+    );
+
+Decoration get glassBoxDecorationStyle => BoxDecoration(
+    borderRadius: BorderRadius.circular(16),
+    border: Border.all(color: Colors.white.withOpacity(0.13), width: 2.0),
+    gradient: AppGradients.glassGradient);
+
+Decoration get appBgBoxDecorationStyle => BoxDecoration(
+      border: Border.all(color: Colors.white.withOpacity(0.13)),
+      gradient: AppGradients.bgGradient,
     );

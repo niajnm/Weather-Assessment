@@ -1,4 +1,3 @@
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_craft/app/core/base/app_theme_data.dart';
 import 'package:flutter_craft/app/core/base/theme.dart';
@@ -19,6 +18,7 @@ class BaseApp extends StatefulWidget {
 }
 
 class _BaseAppState extends State<BaseApp> {
+  Locale? _locale;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _BaseAppState extends State<BaseApp> {
             key: navigatorKey,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: getSupportedLocal(),
-            //   locale: _locale,
+            locale: _locale,
             title: "",
             theme: _getTheme(appLanguage),
             debugShowCheckedModeBanner: false,

@@ -6,7 +6,7 @@ import 'app_values.dart';
 final primaryElevatedButtonStyle = ElevatedButton.styleFrom(
   padding: EdgeInsets.symmetric(
     vertical: AppValues.buttonVerticalPadding.h,
-    horizontal: AppValues.padding.w,
+    horizontal: AppValues.basePadding.w,
   ),
   elevation: 0,
   backgroundColor: AppColors.colorPrimary,

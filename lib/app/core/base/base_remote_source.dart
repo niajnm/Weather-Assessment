@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:flutter_craft/app/core/network/dio_provider.dart';
+import 'package:flutter_craft/app/core/network/dio_Singleton.dart';
 import 'package:flutter_craft/app/core/network/error_handlers.dart';
 import 'package:flutter_craft/app/core/network/exceptions/base_exception.dart';
 import 'package:path_provider/path_provider.dart';
@@ -8,7 +8,8 @@ import 'package:path_provider/path_provider.dart';
 import '../../../flavors/build_config.dart';
 
 abstract class BaseRemoteSource {
-  Dio get dioClient => DioProvider.dioWithHeaderToken;
+  Dio get dioCli => DioProvider.dioGetApi;
+  Dio get dioClientAuth => DioProvider.dioWithHeaderToken;
   Dio get dioWithCacheClient => DioProvider.httpDioWithCache;
 
   final logger = BuildConfig.instance.config.logger;
@@ -20,7 +21,7 @@ abstract class BaseRemoteSource {
       if (response.statusCode != HttpStatus.ok ||
           (response.data as Map<String, dynamic>)['statusCode'] !=
               HttpStatus.ok) {
-        // TODO
+      // logger.log(level, message)
       }
 
       return response;

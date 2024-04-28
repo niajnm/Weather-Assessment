@@ -4,7 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_craft/app/core/values/app_colors.dart';
 import 'package:flutter_craft/app/core/values/app_fonts.dart';
 import 'package:flutter_craft/app/core/values/app_language.dart';
-import 'package:flutter_craft/app/core/values/tab_bar_style.dart';
+import 'package:flutter_craft/app/core/values/app_values.dart';
+import 'package:flutter_craft/app/core/values/style_sheet.dart';
 import 'package:flutter_craft/app/core/values/text_style.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -42,11 +43,13 @@ class AppThemeData {
       ),
       appBarTheme: AppBarTheme(
         systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: AppColors.appBarColorDark,
+          statusBarColor: AppColors.appBarColor,
+          //      Color(0xFF97ABFF),
+          //  Color(0xff123597) ,
           statusBarIconBrightness: Brightness.light,
         ),
         iconTheme: const IconThemeData(color: AppColors.colorWhite),
-        backgroundColor: AppColors.appBarColorDark,
+        backgroundColor: AppColors.appBarColor,
         titleTextStyle:
             pageTitleStyleDark.copyWith(fontFamily: _getFont(appLanguage)),
       ),
@@ -73,23 +76,23 @@ class AppThemeData {
       hintColor: AppColors.neutralGray,
       dialogBackgroundColor: AppColors.pageBackground,
       tabBarTheme: lightTabBarTheme,
-      textTheme: TextTheme(
-        displaySmall: displaySmallTextStyle,
-        displayMedium: displayMediumTextStyle,
-        displayLarge: displayLargeTextStyle,
-        headlineSmall: headlineSmallTextStyle,
-        headlineMedium: headlineMediumTextStyle,
-        headlineLarge: headlineLargeTextStyle,
-        titleSmall: titleSmallTextStyle,
-        titleMedium: titleMediumTextStyle,
-        titleLarge: titleLargeTextStyle,
-        bodySmall: bodySmallTextStyle,
-        bodyMedium: bodyMediumTextStyle,
-        bodyLarge: bodyLargeTextStyle,
-        labelSmall: labelSmallTextStyle,
-        labelMedium: labelMediumTextStyle,
-        labelLarge: labelLargeTextStyle,
-      ),
+      // textTheme: TextTheme(
+      //   displaySmall: displaySmallTextStyle,
+      //   displayMedium: displayMediumTextStyle,
+      //   displayLarge: displayLargeTextStyle,
+      //   headlineSmall: headlineSmallTextStyle,
+      //   headlineMedium: headlineMediumTextStyle,
+      //   headlineLarge: headlineLargeTextStyle,
+      //   titleSmall: titleSmallTextStyle,
+      //   titleMedium: titleMediumTextStyle,
+      //   titleLarge: titleLargeTextStyle,
+      //   bodySmall: bodySmallTextStyle,
+      //   bodyMedium: bodyMediumTextStyle,
+      //   bodyLarge: bodyLargeTextStyle,
+      //   labelSmall: labelSmallTextStyle,
+      //   labelMedium: labelMediumTextStyle,
+      //   labelLarge: labelLargeTextStyle,
+      // ),
       appBarTheme: AppBarTheme(
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: AppColors.appBarColor,
@@ -256,3 +259,6 @@ class AppThemeData {
         fontFamily: GoogleFonts.notoSans().fontFamily,
       );
 }
+
+
+

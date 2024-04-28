@@ -1,31 +1,51 @@
-// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_craft/app/core/values/app_values.dart';
+import 'package:flutter_craft/app/core/values/style_sheet.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-// class BoxTile extends StatelessWidget {
+class BoxTile extends StatelessWidget {
+  final icon;
+  final firstTitle;
+  final secondTitle;
+  final firstDesc;
+  final secondDesc;
+  final time;
 
-//     final icon;
-//     final sunset;
-//     final time ;
+  const BoxTile(
+      {super.key,
+      this.icon,
+      this.time,
+      this.firstTitle,
+      this.secondTitle,
+      this.firstDesc,
+      this.secondDesc});
 
-//    BoxTile({super.key, this.icon, this.sunCondition, this.time});
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(40.0,AppValues.basePadding,40,0),
+      child: Container(
+        decoration: glassBoxDecorationStyle,
+        height: 90.h,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(icon ?? Icons.cloud_circle_rounded, size: 50,),
+                _infoColumn(firstTitle, firstDesc),
+                _infoColumn(secondTitle, secondDesc)
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         Row(
-//           children: [
-//             Icon( icon??Icons.cloud_circle_rounded),
-//             _infoColumn(sun , time),
-//             _infoColumn(sun , time)
-         
-//           ],
-//         )
-//       ],
-//     );
-//   }
-
-
-//  Widget _infoColumn(sun , time)=>    Column(
-//               children: [Text(sun), Text(time)],
-//             );
-// }
+  Widget _infoColumn(title, desc) => Column(
+        children: [Text(title ?? ''), Text(desc ?? '')],
+      );
+}

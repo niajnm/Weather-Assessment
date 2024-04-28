@@ -5,7 +5,7 @@ import 'package:flutter_craft/app/core/network/request_headers.dart';
 import 'package:flutter_craft/flavors/build_config.dart';
 
 class DioProvider {
-  static final String baseUrl = BuildConfig.instance.config.baseUrl + 'api/';
+  static final String baseUrl = '${BuildConfig.instance.config.baseUrl}api/';
 
   static Dio? _instance;
 
@@ -43,7 +43,6 @@ class DioProvider {
   ///returns a Dio client with Access token in header
   static Dio get tokenClient {
     _addInterceptors();
-
     return _instance!;
   }
 
@@ -51,7 +50,11 @@ class DioProvider {
   ///Also adds a token refresh interceptor which retry the request when it's unauthorized
   static Dio get dioWithHeaderToken {
     _addInterceptors();
+    return _instance!;
+  }
 
+  static Dio get dioGetApi {
+    _addInterceptorsMin();
     return _instance!;
   }
 
@@ -74,6 +77,12 @@ class DioProvider {
     _instance ??= httpDio;
     _instance!.interceptors.clear();
     _instance!.interceptors.add(RequestHeaderInterceptor());
+    _instance!.interceptors.add(_prettyDioLogger);
+  }
+
+  static _addInterceptorsMin() {
+    _instance ??= httpDio;
+    _instance!.interceptors.clear();
     _instance!.interceptors.add(_prettyDioLogger);
   }
 

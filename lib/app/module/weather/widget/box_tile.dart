@@ -23,7 +23,7 @@ class BoxTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(40.0,AppValues.basePadding,40,0),
+      padding: const EdgeInsets.fromLTRB(40.0, AppValues.basePadding, 40, 0),
       child: Container(
         decoration: glassBoxDecorationStyle,
         height: 90.h,
@@ -34,7 +34,10 @@ class BoxTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(icon ?? Icons.cloud_circle_rounded, size: 50,),
+                Icon(
+                  icon ?? Icons.sunny_snowing,
+                  size: 50,
+                ),
                 _infoColumn(firstTitle, firstDesc),
                 _infoColumn(secondTitle, secondDesc)
               ],

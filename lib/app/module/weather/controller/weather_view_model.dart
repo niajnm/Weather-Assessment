@@ -7,6 +7,7 @@ import 'package:flutter_craft/app/core/values/localization_helpers.dart';
 import 'package:flutter_craft/app/data/remote/weather/model/weather_params.dart';
 import 'package:flutter_craft/app/data/remote/weather/model/weather_response_model.dart';
 import 'package:flutter_craft/app/data/repository/weather/weather_repository.dart';
+import 'package:flutter_craft/app/module/weather/ui_model/weather_ui_model%20copy.dart';
 import 'package:flutter_craft/app/module/weather/ui_model/weather_ui_model.dart';
 
 class WeatherViewModel extends ChangeNotifier {
@@ -27,16 +28,19 @@ class WeatherViewModel extends ChangeNotifier {
   WeatherUIModel? weatherData;
 
   getWeather() async {
-    var queryParams = WeatherParams(lat: '23.8041', lon: '23.8041');
+    var queryParams = WeatherParams(lat: '23.8041', lon: '90.4152');
 // WeatherParams(lat: currentLat.toString(), lon: currentLon.toString());
     WeatherResponseModel response =
         await _weatherRepository.getSevenDaysWeather(queryParams);
 
-    WeatherUIModel data = convertToUIModel(
-      response,
-    );
+    WeatherUIModel weatherUIModel =
+        WeatherUIModel.fromWeatherResponse(response);
 
-    weatherData = data;
+    // WeatherUIModel data = convertToUIModel(
+    //   response,
+    // );
+
+    weatherData = weatherUIModel;
 
     notifyListeners();
 
@@ -59,15 +63,14 @@ class WeatherViewModel extends ChangeNotifier {
       longitude: response.lon,
       timezone: response.timezone,
       timezoneOffset: response.timezoneOffset,
-      currentTemperature: response.current!.temp.round().toString()+'',
+      currentTemperature: response.current!.temp.round().toString() + '',
       currentWeatherDescription: response.current?.weather?.first.description,
       currentWeatherIcon: currentWeatherUrl,
       dailyForecasts: response.daily?.map((daily) {
         return DailyUIModel(
-          date: DateTime.fromMillisecondsSinceEpoch((daily.dt ?? 0) * 1000),
-     
+          // date: DateTime.fromMillisecondsSinceEpoch((daily.dt ?? 0) * 1000),
           dayTemperature: daily.temp?.day,
-               day: formatWeekDayName(daily.dt),
+          day: formatWeekDayName(daily.dt),
           weatherDescription: daily.weather?.first.description,
           weatherIcon:
               "${ImageValues.weather_image_url}${daily.weather!.first.icon}@2x.png",

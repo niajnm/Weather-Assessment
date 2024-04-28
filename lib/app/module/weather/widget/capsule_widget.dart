@@ -3,7 +3,6 @@ import 'package:flutter_craft/app/core/values/app_values.dart';
 import 'package:flutter_craft/app/core/values/extention.dart';
 import 'package:flutter_craft/app/module/weather/widget/froster_glass.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:path/path.dart';
 
 class CapsuleWidget extends StatelessWidget {
   final needDot;
@@ -17,7 +16,10 @@ class CapsuleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FrostedGlassBox(
-        theWidth: 80.0, theHeight: 150.0, theChild: _items());
+        dotEnable: needDot,
+        theWidth: 84.0.w,
+        theHeight: 140.h,
+        theChild: _items());
   }
 
   Widget _items() => Padding(

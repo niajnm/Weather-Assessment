@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_craft/app/core/values/app_colors.dart';
+import 'package:flutter_craft/app/core/values/app_values.dart';
 import 'package:flutter_craft/app/core/values/extention.dart';
 import 'package:flutter_craft/app/core/values/image_values.dart';
 import 'package:flutter_craft/app/core/values/style_sheet.dart';
@@ -17,6 +19,8 @@ import 'package:flutter_craft/app/module/weather/widget/capsule_widget.dart';
 import 'package:flutter_craft/app/module/weather/widget/froster_glass.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+
+import '../ui_model/weather_ui_model copy.dart';
 
 class WeatherMainScreen extends StatefulWidget {
   const WeatherMainScreen({super.key});
@@ -79,28 +83,23 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
                           children: [
                             _weatherTempSec(data.currentTemperature!,
                                 data.currentWeatherIcon),
-                            Text(
-                              'Party cloud',
-                              style: bodyLargeTextStyleDark,
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                      bottom: AppValues.basePadding)
+                                  .r,
+                              child: Text(
+                                data.currentWeatherDescription.toString(),
+                                style: context.appThemeText.displayMedium,
+                              ),
                             ),
-
                             dailyForecast(data.dailyForecasts!),
-
-                            //  CapsuleWidget(day: 'Today', icon: '', temp: '30'),
-                            // BoxTile(
-                            //   firstTitle: 'Sunset',
-                            //   firstDesc: '5:52 pm',
-                            //   secondTitle: 'Sunrise',
-                            //   secondDesc: '7:00AM',
-                            // ),
-                            // BoxTile(
-                            //   firstTitle: 'Sunset',
-                            //   firstDesc: '5:52 pm',
-                            // )
+                            _bottomStatusColumn(data)
                           ],
                         )
                       ])
-                : const CircularProgressIndicator();
+                : const CircularProgressIndicator(
+                    color: AppColors.appBarColor,
+                  );
           })
         ],
       ),
@@ -118,12 +117,12 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: CapsuleWidget(
+                needDot: index == 0,
                 day: forecastList[index].day, // Replace with the actual day
                 icon: forecastList[index]
                     .weatherIcon, // Replace with the actual icon URL or icon data
-                temp: forecastList[index]
-                    .dayTemperature
-                    .toString(), // Replace with the actual temperature
+                temp:
+                    "${forecastList[index].dayTemperature!.round()}°", // Replace with the actual temperature
               ),
             );
           },
@@ -147,9 +146,25 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
           Padding(
             padding: const EdgeInsets.only(left: 28.0),
             child: Text(
-              temp.toString(),
+              '$temp°',
               style: headlineLargeTextStyle.copyWith(fontSize: 80),
             ),
+          )
+        ],
+      );
+
+  Widget _bottomStatusColumn(WeatherUIModel weatherData) => Column(
+        children: [
+          //CapsuleWidget(day: 'Today', icon: '', temp: '30'),
+          BoxTile(
+            firstTitle: 'Sunset',
+            firstDesc: weatherData.sunset,
+            secondTitle: 'Sunrise',
+            secondDesc: weatherData.sunrise,
+          ),
+          BoxTile(
+            firstTitle: 'Sunset',
+            firstDesc: '5:52 pm',
           )
         ],
       );

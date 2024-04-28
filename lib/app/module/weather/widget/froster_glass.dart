@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
+// ignore: must_be_immutable
 class FrostedGlassBox extends StatelessWidget {
+  final dotEnable;
   final theWidth;
   final theHeight;
   Widget theChild;
   FrostedGlassBox(
       {Key? key,
+      required this.dotEnable,
       required this.theWidth,
       required this.theHeight,
       required this.theChild})
@@ -53,7 +56,7 @@ class FrostedGlassBox extends StatelessWidget {
                 ),
               ),
             ),
-            dotWhite()
+            dotEnable ? dotWhite() : SizedBox.shrink()
           ],
         ),
       ],

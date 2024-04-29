@@ -1,25 +1,14 @@
-import 'dart:developer';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_craft/app/core/values/app_colors.dart';
 import 'package:flutter_craft/app/core/values/app_values.dart';
 import 'package:flutter_craft/app/core/values/extention.dart';
-import 'package:flutter_craft/app/core/values/image_values.dart';
 import 'package:flutter_craft/app/core/values/style_sheet.dart';
-import 'package:flutter_craft/app/data/remote/weather/model/weather_response_model.dart';
-import 'package:flutter_craft/app/module/weather/ui_model/weather_ui_model.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'package:flutter_craft/app/core/values/text_style.dart';
 import 'package:flutter_craft/app/module/weather/controller/weather_view_model.dart';
 import 'package:flutter_craft/app/module/weather/widget/box_tile.dart';
 import 'package:flutter_craft/app/module/weather/widget/capsule_widget.dart';
-import 'package:flutter_craft/app/module/weather/widget/froster_glass.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
 import '../ui_model/weather_ui_model copy.dart';
 
 class WeatherMainScreen extends StatefulWidget {
@@ -41,22 +30,30 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
     //     Provider.of<HomeViewModel>(context, listen: false).getLat();
     // double currentLon =
     //     Provider.of<HomeViewModel>(context, listen: false).getLon();
-
     await Provider.of<WeatherViewModel>(context, listen: false).getWeather();
   }
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
       ),
       body: Stack(
         children: [
-          Expanded(child: Container(decoration: appBgBoxDecorationStyle)),
+          Expanded(
+              child: Container(decoration: appBgBoxDecorationStyle
+                  //          child: Image.asset(
+                  //   'assets/images/weather_bg.png',
+                  //   fit: BoxFit.cover,
+                  //   height: height,
+                  //   width: width,
+                  // )
+                  )),
           Consumer<WeatherViewModel>(builder: (context, viewModel, child) {
             var data = viewModel.weatherData;
-
             return data != null
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -94,6 +91,14 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
                             ),
                             dailyForecast(data.dailyForecasts!),
                             _bottomStatusColumn(data)
+
+                            // CustomPaint(
+                            //   size: Size(
+                            //       width,
+                            //       (width * 0.5833333333333334)
+                            //           .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                            //   painter: RPSCustomPainter(),
+                            // ),
                           ],
                         )
                       ])
@@ -133,8 +138,8 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            height: 120.h,
-            width: 120.w,
+            height: 130.h,
+            width: 130.w,
             child: ClipRRect(
                 // borderRadius: BorderRadius.circular(8.r),
                 child: Image.network(
@@ -143,12 +148,10 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
               //   color: context.resources.colors.error,
             )),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 28.0),
-            child: Text(
-              '$temp°',
-              style: headlineLargeTextStyle.copyWith(fontSize: 80),
-            ),
+          SizedBox(width: 25.w),
+          Text(
+            '$temp°',
+            style: headlineLargeTextStyle.copyWith(fontSize: 80),
           )
         ],
       );
@@ -157,14 +160,14 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
         children: [
           //CapsuleWidget(day: 'Today', icon: '', temp: '30'),
           BoxTile(
-            firstTitle: 'Sunset',
-            firstDesc: weatherData.sunset,
-            secondTitle: 'Sunrise',
-            secondDesc: weatherData.sunrise,
+            firstTitle: 'Sunrise',
+            firstDesc: weatherData.sunrise,
+            secondTitle: 'Sunset',
+            secondDesc: weatherData.sunset,
           ),
           BoxTile(
-            firstTitle: 'Sunset',
-            firstDesc: '5:52 pm',
+            firstTitle: 'Feels Like',
+            firstDesc: weatherData.feelsLike,
           )
         ],
       );

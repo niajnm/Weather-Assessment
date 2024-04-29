@@ -18,6 +18,8 @@ class BaseApp extends StatefulWidget {
 }
 
 class _BaseAppState extends State<BaseApp> {
+
+  
   Locale? _locale;
   // This widget is the root of your application.
   @override

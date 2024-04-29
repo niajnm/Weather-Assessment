@@ -9,9 +9,12 @@ import 'package:flutter_craft/app/data/remote/weather/model/weather_response_mod
 import 'package:flutter_craft/app/data/repository/weather/weather_repository.dart';
 import 'package:flutter_craft/app/module/weather/ui_model/weather_ui_model%20copy.dart';
 import 'package:flutter_craft/app/module/weather/ui_model/weather_ui_model.dart';
+import 'package:flutter_craft/app/utils/location/location_service.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class WeatherViewModel extends ChangeNotifier {
-  WeatherRepository _weatherRepository = serviceLocator<WeatherRepository>();
+  final WeatherRepository _weatherRepository = serviceLocator<WeatherRepository>();
 
   // translateText(String? text, BuildContext context) async {
   //   final String currentLocale = Localizations.localeOf(context).languageCode;
@@ -28,17 +31,13 @@ class WeatherViewModel extends ChangeNotifier {
   WeatherUIModel? weatherData;
 
   getWeather() async {
-    var queryParams = WeatherParams(lat: '23.8041', lon: '90.4152');
+      var queryParams = WeatherParams(lat: '45.7567', lon: '126.6424');
+  //  var queryParams = WeatherParams(lat: '${LocationService().getLat}', lon: '${LocationService().getLon}');
 // WeatherParams(lat: currentLat.toString(), lon: currentLon.toString());
     WeatherResponseModel response =
         await _weatherRepository.getSevenDaysWeather(queryParams);
-
     WeatherUIModel weatherUIModel =
         WeatherUIModel.fromWeatherResponse(response);
-
-    // WeatherUIModel data = convertToUIModel(
-    //   response,
-    // );
 
     weatherData = weatherUIModel;
 
@@ -79,44 +78,46 @@ class WeatherViewModel extends ChangeNotifier {
     );
   }
 
-  // Future<WeatherModelUi> getSevenDaysWeather(
-  //     double currentLat, double currentLon, BuildContext context) async {
-  //   var queryParams =
-  //       WeatherParams(lat: currentLat.toString(), lon: currentLon.toString());
-  //   WeatherResponseModel response =
-  //       await _weatherRepository.getSevenDaysWeather(queryParams);
-
-  //   WeatherModelUi data = await convertToWeatherModelUi(response, context);
-
-  //   return data;
+  // Future<bool> requestLocationPermission() async {
+  //   var position = await LocationService.getCurrentLocation();
+  //   final PermissionStatus permissionStatus = await Permission.location.status;
+  //   if (permissionStatus.isGranted || permissionStatus.isLimited) {
+  //     _setCurrentLocation(position.latitude, position.longitude);
+  //     return true;
+  //   }
+  //   return false;
   // }
 
-  // Future<WeatherModelUi> convertToWeatherModelUi(
-  //     WeatherResponseModel response, BuildContext context) async {
-  //   double? currentTemperature = response.current?.temp;
-  //   String? currentWeatherStatus = await translateText(
-  //       response.current?.weather?[0].description ?? 'Loading', context);
+  // Future<bool> isLocationServiceAvailable() async {
+  //   final PermissionStatus permissionStatus = await Permission.location.status;
 
-  //   final currentWeatherIcon = response.current?.weather?[0].icon;
-  //   String? currentWeatherUrl =
-  //       "${ImageValues.weather_image_url}$currentWeatherIcon@2x.png";
+  //   if (permissionStatus.isGranted) {
+  //     log("Location access granted");
+  //     try {
+  //       final Position position = await LocationService.getCurrentLocation();
+  //       if (position != null) {
+  //         _setCurrentLocation(position.latitude, position.longitude);
+  //         return true;
+  //       }
+  //     } catch (e) {
+  //       log("Error getting current location: $e");
+  //     }
+  //   } else {
+  //     log("Location access denied");
+  //   }
 
-  //   // Extract daily data
-  //   List<DaysAndTimes>? daysAndTimesList = response.daily?.map((daily) {
-  //     String? icon = daily.weather?[0].icon;
-  //     return DaysAndTimes(
-  //       days: formatDayName(daily.dt, context),
-  //       dates: formatDate(daily.dt, context),
-  //       temperature: formatTemperature(daily.temp?.day, context),
-  //       imageUrl: "${ImageValues.weather_image_url}$icon@2x.png",
-  //     );
-  //   }).toList();
-
-  //   return WeatherModelUi(
-  //     currentWeather: formatTemperature(currentTemperature!, context),
-  //     currentWeatherStatus: currentWeatherStatus,
-  //     currentWeatherUrl: currentWeatherUrl,
-  //     daysAndTimesList: daysAndTimesList,
-  //   );
+  //   return false;
   // }
+
+  // var _currentLat;
+  // var _currentLon;
+
+  // void _setCurrentLocation(Lat, Lon) {
+  //   _currentLat = Lat;
+  //   _currentLon = Lon;
+  // }
+
+  // double get getLat => _currentLat;
+
+  // double get getLon => _currentLon;
 }

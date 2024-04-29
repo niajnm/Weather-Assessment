@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_craft/app/base_app/base_app.dart';
 import 'package:flutter_craft/app/core/provider/provider.dart';
 import 'package:flutter_craft/app/core/services/service_locator.dart';
+import 'package:flutter_craft/app/utils/location/location_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,6 +41,8 @@ void main() async {
 
   await ScreenUtil.ensureScreenSize();
   await ServiceLocator.setUpServiceLocator();
+
+   await LocationService().requestLocationPermission();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(

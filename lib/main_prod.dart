@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_craft/app/base_app/base_app.dart';
-import 'package:flutter_craft/app/core/provider/provider.dart';
-import 'package:flutter_craft/app/core/services/service_locator.dart';
-import 'package:flutter_craft/app/utils/constants.dart';
+import 'package:weather_assesment/app/base_app/base_app.dart';
+import 'package:weather_assesment/app/core/provider/provider.dart';
+import 'package:weather_assesment/app/core/services/service_locator.dart';
+import 'package:weather_assesment/app/utils/constants.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_storage/get_storage.dart';

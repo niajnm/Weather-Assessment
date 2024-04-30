@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_craft/app/core/values/app_values.dart';
-import 'package:flutter_craft/app/core/values/style_sheet.dart';
+import 'package:weather_assesment/app/core/values/app_values.dart';
+import 'package:weather_assesment/app/core/values/extention.dart';
+import 'package:weather_assesment/app/core/values/style_sheet.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BoxTile extends StatelessWidget {
@@ -48,7 +49,11 @@ class BoxTile extends StatelessWidget {
     );
   }
 
-  Widget _infoColumn(title, desc) => Column(
-        children: [Text(title ?? ''), Text(desc ?? '')],
-      );
+  Widget _infoColumn(title, desc) => Builder(
+    builder: (context) {
+      return Column(
+            children: [Text(title ?? '' , style:context.appThemeText.headlineSmall,), Text(desc ?? '', style:context.appThemeText.displayMedium,)],
+          );
+    }
+  );
 }

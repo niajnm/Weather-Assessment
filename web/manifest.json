@@ -1,6 +1,6 @@
 {
-    "name": "flutter_craft",
-    "short_name": "flutter_craft",
+    "name": "weather_assesment",
+    "short_name": "weather_assesment",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

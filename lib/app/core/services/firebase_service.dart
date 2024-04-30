@@ -4,9 +4,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:flutter_craft/app/utils/constants.dart';
-import 'package:flutter_craft/flavors/build_config.dart';
-import 'package:flutter_craft/flavors/environment.dart';
+import 'package:weather_assesment/app/utils/constants.dart';
+import 'package:weather_assesment/flavors/build_config.dart';
+import 'package:weather_assesment/flavors/environment.dart';
 import 'package:logger/logger.dart';
 
 import 'notification_service.dart';

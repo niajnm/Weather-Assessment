@@ -1,9 +1,9 @@
-import 'package:flutter_craft/app/data/local/preference/preference_manager.dart';
-import 'package:flutter_craft/app/data/local/preference/preference_manager_impl.dart';
-import 'package:flutter_craft/app/data/remote/weather/weather_remote_source.dart';
-import 'package:flutter_craft/app/data/remote/weather/weather_remote_source_impl.dart';
-import 'package:flutter_craft/app/data/repository/weather/weather_repository.dart';
-import 'package:flutter_craft/app/data/repository/weather/weather_repository_impl.dart';
+import 'package:weather_assesment/app/data/local/preference/preference_manager.dart';
+import 'package:weather_assesment/app/data/local/preference/preference_manager_impl.dart';
+import 'package:weather_assesment/app/data/remote/weather_remote/weather_remote_source.dart';
+import 'package:weather_assesment/app/data/remote/weather_remote/weather_remote_source_impl.dart';
+import 'package:weather_assesment/app/data/repository/weather_repository/weather_repository.dart';
+import 'package:weather_assesment/app/data/repository/weather_repository/weather_repository_impl.dart';
 import 'package:get_it/get_it.dart';
 
 final serviceLocator = GetIt.instance;
@@ -19,17 +19,5 @@ class ServiceLocator {
 
     serviceLocator.registerLazySingleton<WeatherRepository>(
         () => WeatherRepositoryImpl());
-
-    // serviceLocator.registerLazySingleton<ConfigLocalSource>(
-    //     () => ConfigLocalSourceImpl());
-
-    // serviceLocator
-    //     .registerLazySingleton<ConfigRepository>(() => ConfigRepositoryImpl());
-
-    // serviceLocator
-    //     .registerLazySingleton<HomeRemoteSource>(() => HomeRemoteSourceImpl());
-
-    // serviceLocator
-    //     .registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl());
   }
 }

@@ -7,8 +7,8 @@ import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_craft/app/utils/constants.dart';
-import 'package:flutter_craft/flavors/build_config.dart';
+import 'package:weather_assesment/app/utils/constants.dart';
+import 'package:weather_assesment/flavors/build_config.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:logger/logger.dart';

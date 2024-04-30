@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_craft/app/core/route/route_paths.dart';
+import 'package:weather_assesment/app/core/route/route_paths.dart';
 
 class RouteServices {
   static Route<dynamic> generateRoute(RouteSettings settings) {

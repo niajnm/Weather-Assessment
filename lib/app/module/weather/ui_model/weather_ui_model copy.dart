@@ -1,5 +1,5 @@
-import 'package:flutter_craft/app/core/values/image_values.dart';
-import 'package:flutter_craft/app/data/remote/weather/model/weather_response_model.dart';
+import 'package:weather_assesment/app/core/values/image_values.dart';
+import 'package:weather_assesment/app/data/remote/weather_remote/model/weather_response_model.dart';
 import 'package:intl/intl.dart';
 
 class DailyUIModel {

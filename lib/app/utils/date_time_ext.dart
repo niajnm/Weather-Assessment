@@ -1,6 +1,6 @@
-import 'package:flutter_craft/app/base_app/base_app.dart';
-import 'package:flutter_craft/app/utils/date_parser.dart';
-import 'package:flutter_craft/app/utils/int_ext.dart';
+import 'package:weather_assesment/app/base_app/base_app.dart';
+import 'package:weather_assesment/app/utils/date_parser.dart';
+import 'package:weather_assesment/app/utils/int_ext.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:intl/intl.dart';

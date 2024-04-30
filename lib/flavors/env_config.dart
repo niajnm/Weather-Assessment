@@ -1,4 +1,4 @@
-import 'package:flutter_craft/app/utils/constants.dart';
+import 'package:weather_assesment/app/utils/constants.dart';
 import 'package:logger/logger.dart';
 class EnvConfig {
   final String appName;

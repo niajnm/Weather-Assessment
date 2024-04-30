@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_craft/app/core/base/app_theme_data.dart';
-import 'package:flutter_craft/app/core/base/theme.dart';
-import 'package:flutter_craft/app/core/route/go_route_service.dart';
-import 'package:flutter_craft/app/core/values/app_language.dart';
-import 'package:flutter_craft/app/data/local/preference/preference_manager.dart';
-import 'package:flutter_craft/app/data/local/preference/preference_manager_impl.dart';
+import 'package:provider/provider.dart';
+import 'package:weather_assesment/app/core/base/app_theme_data.dart';
+import 'package:weather_assesment/app/core/base/theme.dart';
+import 'package:weather_assesment/app/core/route/go_route_service.dart';
+import 'package:weather_assesment/app/core/values/app_language.dart';
+import 'package:weather_assesment/app/data/local/preference/preference_manager.dart';
+import 'package:weather_assesment/app/data/local/preference/preference_manager_impl.dart';
+import 'package:weather_assesment/app/module/weather/controller/weather_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:weather_assesment/app/utils/location/location_service.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -18,10 +22,35 @@ class BaseApp extends StatefulWidget {
 }
 
 class _BaseAppState extends State<BaseApp> {
+  @override
+  void initState() {
+    super.initState();
+    checklocation(context); // Pass the BuildContext here
+  }
 
-  
+  permission() async {
+    bool isPermissionGranted = await LocationService.isLocationPermissionGranted();
+    if (isPermissionGranted) {
+      // Location permission is granted, proceed with getting location
+    } else {
+      // Location permission is not granted, handle accordingly
+    }
+  }
+
+  checklocation(BuildContext context) async {
+    // Add the BuildContext parameter here
+    Position? currentPosition =
+        await LocationService.getLocationWithPermissionCheck();
+    if (currentPosition != null) {
+      Provider.of<WeatherViewModel>(context, listen: false).setCurrentLocation(
+          currentPosition.latitude, currentPosition.longitude);
+    } else {
+      // Handle the case when the location couldn't be obtained
+    }
+  }
+
   Locale? _locale;
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     String appLanguage = _preference.getString(
@@ -46,30 +75,6 @@ class _BaseAppState extends State<BaseApp> {
             routerConfig: GoRouterService.router,
           );
         });
-
-    // return ScreenUtilInit(
-
-    //      designSize:  Size(
-    //       AppValues.defaultScreenWidth,
-    //       AppValues.defaultScreenHeight,
-    //     ),
-    //   child: MaterialApp.router(
-    //     key: navigatorKey,
-    //     //  title: 'Flutter Demo',
-    //     localizationsDelegates: const [
-    //       AppLocalizations.delegate, // Add this line
-    //       GlobalMaterialLocalizations.delegate,
-    //       GlobalWidgetsLocalizations.delegate,
-    //       GlobalCupertinoLocalizations.delegate,
-    //     ],
-    //     supportedLocales: const [
-    //       Locale('en'), // English
-    //       Locale('es'), // Spanish
-    //     ],
-    //     theme: _getTheme( appLanguage),
-    //     home: const HomePage(title: 'Flutter Demo Home Page'),
-    //   ),
-    // );
   }
 
   final PreferenceManager _preference = PreferenceManagerImpl();

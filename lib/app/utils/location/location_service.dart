@@ -1,135 +1,86 @@
 import 'dart:developer';
 
 import 'package:app_settings/app_settings.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class LocationService {
   static Position? _position;
 
-  // static Future<bool> hasLocationPermission() async {
-  //   PermissionStatus permissionStatus = await Permission.location.status;
-  //   return (permissionStatus.isGranted || permissionStatus.isLimited);
-  // }
+  static Future<bool> hasLocationPermission() async {
+    PermissionStatus permissionStatus = await Permission.location.status;
+    return (permissionStatus.isGranted || permissionStatus.isLimited);
+  }
 
-  // static Future<bool> getIsGpsAccessible() {
-  //   return Geolocator.isLocationServiceEnabled().then((value) async {
-  //     bool isLocationPermissionDenied = await _getIsLocationPermissionDenied();
+  static Future<bool> getIsGpsAccessible() {
+    return Geolocator.isLocationServiceEnabled().then((value) async {
+      bool isLocationPermissionDenied = await _getIsLocationPermissionDenied();
 
-  //     return !isLocationPermissionDenied && value;
-  //   });
-  // }
+      return !isLocationPermissionDenied && value;
+    });
+  }
 
-  // static Future<bool> _getIsLocationPermissionDenied() {
-  //   return Geolocator.checkPermission().then((value) {
-  //     return value == LocationPermission.deniedForever ||
-  //         value == LocationPermission.denied ||
-  //         value == LocationPermission.unableToDetermine;
-  //   });
-  // }
+  static Future<bool> _getIsLocationPermissionDenied() {
+    return Geolocator.checkPermission().then((value) {
+      return value == LocationPermission.deniedForever ||
+          value == LocationPermission.denied ||
+          value == LocationPermission.unableToDetermine;
+    });
+  }
 
-  // static Future<bool> isLocationServiceEnable() async {
-  //   LocationPermission permission = await Geolocator.checkPermission();
-  //   if (permission == LocationPermission.always ||
-  //       permission == LocationPermission.whileInUse) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
-  // ignore: prefer-conditional-expressions
-  static Future<Position> getCurrentLocation() async {
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      _openAppSettings();
-      return Future.error("Location Permission Disabled");
-    }
-
+  static Future<bool> isLocationServiceEnable() async {
     LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-         _openAppSettings();
-        return Future.error("Location Permission Denied");
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      await Geolocator.openLocationSettings();
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.deniedForever) {
-        return Future.error("Location Permission Denied Permanently");
-      }
-    }
-
-    if (_position == null) {
-      return await Geolocator.getCurrentPosition(
-              desiredAccuracy: LocationAccuracy.low)
-          .then((value) {
-        _position = value;
-        return value;
-      }, onError: (error) {
-        if (_position == null) {
-          return Future.value(_position);
-        }
-
-        return Future.error(error);
-      });
-    } else {
-      return Future.value(_position);
-    }
-  }
-
-  static Future<void> _openAppSettings() async {
-    await Geolocator.checkPermission();
-    AppSettings.openAppSettings(type: AppSettingsType.location);
-    // Open the app settings page
-  }
-
-//..............................................................
-
-  Future<bool> requestLocationPermission() async {
-    var position = await LocationService.getCurrentLocation();
-    final PermissionStatus permissionStatus = await Permission.location.status;
-    if (permissionStatus.isGranted || permissionStatus.isLimited) {
-      _setCurrentLocation(position.latitude, position.longitude);
+    if (permission == LocationPermission.always ||
+        permission == LocationPermission.whileInUse) {
       return true;
     }
     return false;
   }
 
-  Future<bool> isLocationServiceAvailable() async {
-    final PermissionStatus permissionStatus = await Permission.location.status;
+  // Used this fuction to hande location for this project
+  static Future<Position?> getLocationWithPermissionCheck() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    Position? currentPosition;
 
-    requestLocationPermission();
-
-    if (permissionStatus.isGranted) {
-      log("Location access granted");
-      try {
-        final Position position = await LocationService.getCurrentLocation();
-        if (position != null) {
-          _setCurrentLocation(position.latitude, position.longitude);
-          return true;
-        }
-      } catch (e) {
-        log("Error getting current location: $e");
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.whileInUse ||
+          permission == LocationPermission.always) {
+        currentPosition = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high);
       }
-    } else {
-      log("Location access denied");
+    } else if (permission == LocationPermission.whileInUse ||
+        permission == LocationPermission.always) {
+      currentPosition = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
     }
 
-    return false;
+    return currentPosition;
   }
 
-  var _currentLat;
-  var _currentLon;
-
-  _setCurrentLocation(Lat, Lon) {
-    _currentLat = Lat;
-    _currentLon = Lon;
+  static Future<bool> isLocationPermissionGranted() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    return permission == LocationPermission.whileInUse ||
+        permission == LocationPermission.always;
   }
 
-  get getLat => _currentLat;
+  static Future<String?> getCityName(double latitude, double longitude) async {
+    log('latitude ${latitude.runtimeType}');
+    try {
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(latitude, longitude);
+      if (placemarks.isNotEmpty) {
+        Placemark placemark = placemarks.first;
 
-  get getLon => _currentLon;
+        return placemark.locality ??
+            placemark.subAdministrativeArea ??
+            placemark.administrativeArea;
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+    return 'Load';
+  }
 }

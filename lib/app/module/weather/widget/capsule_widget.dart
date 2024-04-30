@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_craft/app/core/values/app_values.dart';
-import 'package:flutter_craft/app/core/values/extention.dart';
-import 'package:flutter_craft/app/module/weather/widget/froster_glass.dart';
+import 'package:weather_assesment/app/core/values/app_values.dart';
+import 'package:weather_assesment/app/core/values/extention.dart';
+import 'package:weather_assesment/app/module/weather/widget/froster_glass.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CapsuleWidget extends StatelessWidget {

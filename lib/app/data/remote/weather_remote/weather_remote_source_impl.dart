@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_craft/app/data/remote/end_point_api.dart';
-import 'package:flutter_craft/app/data/remote/weather/model/weather_params.dart';
-import 'package:flutter_craft/app/data/remote/weather/model/weather_response_model.dart';
-import 'package:flutter_craft/app/data/remote/weather/weather_remote_source.dart';
+import 'package:weather_assesment/app/data/remote/end_point_api.dart';
+import 'package:weather_assesment/app/data/remote/weather_remote/model/weather_params.dart';
+import 'package:weather_assesment/app/data/remote/weather_remote/model/weather_response_model.dart';
+import 'package:weather_assesment/app/data/remote/weather_remote/weather_remote_source.dart';
 
 import '../../../core/base/base_remote_source.dart';
 

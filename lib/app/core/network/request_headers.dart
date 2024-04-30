@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_craft/app/core/services/service_locator.dart';
+import 'package:weather_assesment/app/core/services/service_locator.dart';
 
 class RequestHeaderInterceptor extends InterceptorsWrapper {
   // final UserInfoRepository _userRepository =

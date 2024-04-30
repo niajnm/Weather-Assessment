@@ -1,12 +1,12 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_craft/app/core/values/app_colors.dart';
-import 'package:flutter_craft/app/core/values/app_fonts.dart';
-import 'package:flutter_craft/app/core/values/app_language.dart';
-import 'package:flutter_craft/app/core/values/app_values.dart';
-import 'package:flutter_craft/app/core/values/style_sheet.dart';
-import 'package:flutter_craft/app/core/values/text_style.dart';
+import 'package:weather_assesment/app/core/values/app_colors.dart';
+import 'package:weather_assesment/app/core/values/app_fonts.dart';
+import 'package:weather_assesment/app/core/values/app_language.dart';
+import 'package:weather_assesment/app/core/values/app_values.dart';
+import 'package:weather_assesment/app/core/values/style_sheet.dart';
+import 'package:weather_assesment/app/core/values/text_style.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppThemeData {

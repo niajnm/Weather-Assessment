@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_craft/app/core/values/app_colors.dart';
-import 'package:flutter_craft/app/core/values/app_values.dart';
-import 'package:flutter_craft/app/core/values/extention.dart';
-import 'package:flutter_craft/app/core/values/style_sheet.dart';
-import 'package:flutter_craft/app/core/values/text_style.dart';
-import 'package:flutter_craft/app/module/weather/controller/weather_view_model.dart';
-import 'package:flutter_craft/app/module/weather/widget/box_tile.dart';
-import 'package:flutter_craft/app/module/weather/widget/capsule_widget.dart';
+import 'package:weather_assesment/app/core/values/app_colors.dart';
+import 'package:weather_assesment/app/core/values/app_values.dart';
+import 'package:weather_assesment/app/core/values/extention.dart';
+import 'package:weather_assesment/app/core/values/style_sheet.dart';
+import 'package:weather_assesment/app/core/values/text_style.dart';
+import 'package:weather_assesment/app/module/weather/controller/weather_view_model.dart';
+import 'package:weather_assesment/app/module/weather/widget/box_tile.dart';
+import 'package:weather_assesment/app/module/weather/widget/capsule_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../ui_model/weather_ui_model copy.dart';
@@ -26,17 +26,11 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
   }
 
   _getSevenDaysWeatherList() async {
-    // double currentLat =
-    //     Provider.of<HomeViewModel>(context, listen: false).getLat();
-    // double currentLon =
-    //     Provider.of<HomeViewModel>(context, listen: false).getLon();
     await Provider.of<WeatherViewModel>(context, listen: false).getWeather();
   }
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -52,64 +46,75 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
                   //   width: width,
                   // )
                   )),
-          Consumer<WeatherViewModel>(builder: (context, viewModel, child) {
-            var data = viewModel.weatherData;
-            return data != null
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0.0, 20, 0, 15).r,
-                          child: Text(
-                            context.lanValue!.info,
-                            style: context.appThemeText.displayLarge,
-                            //style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                        ),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.gps_fixed),
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text('Current Location'),
-                            )
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            _weatherTempSec(data.currentTemperature!,
-                                data.currentWeatherIcon),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                      bottom: AppValues.basePadding)
-                                  .r,
-                              child: Text(
-                                data.currentWeatherDescription.toString(),
-                                style: context.appThemeText.displayMedium,
-                              ),
+          Column(
+            children: [
+              _cityName(),
+              _currrentLocationWidget(),
+              Consumer<WeatherViewModel>(builder: (context, viewModel, child) {
+                var data = viewModel.weatherData;
+                return data != null
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          _weatherTempSec(data.currentTemperature!,
+                              data.currentWeatherIcon),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                    bottom: AppValues.basePadding)
+                                .r,
+                            child: Text(
+                              data.currentWeatherDescription.toString(),
+                              style: context.appThemeText.displayMedium,
                             ),
-                            dailyForecast(data.dailyForecasts!),
-                            _bottomStatusColumn(data)
+                          ),
+                          dailyForecast(data.dailyForecasts!),
+                          _bottomStatusColumn(data)
 
-                            // CustomPaint(
-                            //   size: Size(
-                            //       width,
-                            //       (width * 0.5833333333333334)
-                            //           .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                            //   painter: RPSCustomPainter(),
-                            // ),
-                          ],
-                        )
-                      ])
-                : const CircularProgressIndicator(
-                    color: AppColors.appBarColor,
-                  );
-          })
+                          // CustomPaint(
+                          //   size: Size(
+                          //       width,
+                          //       (width * 0.5833333333333334)
+                          //           .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                          //   painter: RPSCustomPainter(),
+                          // ),
+                        ],
+                      )
+                    : const CircularProgressIndicator(
+                        color: AppColors.appBarColor,
+                      );
+              }),
+            ],
+          )
         ],
       ),
     );
   }
+
+  Widget _cityName() => Consumer<WeatherViewModel>(
+        builder: (context, viewModel, child) {
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(0.0, 20, 0, 15).r,
+            child: Text(
+              viewModel.cityName!,
+              style: context.appThemeText.displayLarge,
+            ),
+          );
+        },
+      );
+
+  Widget _currrentLocationWidget() => InkWell(
+        onTap: () => _getSevenDaysWeatherList(),
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.gps_fixed),
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text('Current Location'),
+            )
+          ],
+        ),
+      );
 
   Widget dailyForecast(List<DailyUIModel> forecastList) => SizedBox(
         height: 200,

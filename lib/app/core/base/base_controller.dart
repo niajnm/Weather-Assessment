@@ -1,6 +1,6 @@
 
-// import 'package:flutter_craft/app/core/base/base_state.dart';
-// import 'package:flutter_craft/flavors/build_config.dart';
+// import 'package:weather_assesment/app/core/base/base_state.dart';
+// import 'package:weather_assesment/flavors/build_config.dart';
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:logger/logger.dart';
 

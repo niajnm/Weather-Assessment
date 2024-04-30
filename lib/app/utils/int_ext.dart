@@ -1,4 +1,4 @@
-import 'package:flutter_craft/app/utils/constants.dart';
+import 'package:weather_assesment/app/utils/constants.dart';
 import 'package:intl/intl.dart';
 
 extension IntExtenstions on int {

@@ -24,5 +24,11 @@
   "info": "তথ্য",
   "contacts": "যোগাযোগ",
   "news": "সংবাদ",
-  "today": "Today"
+  "today": "Today",
+  "sunRise": "Sunrise",
+  "sunSet": "Sunset",
+  "feelsLike": "Feels Like",
+  "vsisbility": "Visibility",
+  "currentLocation": "Current Location",
+  "pressure": "Pressure"
 }

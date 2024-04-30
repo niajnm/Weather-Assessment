@@ -31,61 +31,61 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-      ),
-      body: Stack(
-        children: [
-          Expanded(
-              child: Container(decoration: appBgBoxDecorationStyle
-                  //          child: Image.asset(
-                  //   'assets/images/weather_bg.png',
-                  //   fit: BoxFit.cover,
-                  //   height: height,
-                  //   width: width,
-                  // )
-                  )),
-          Column(
-            children: [
-              _cityName(),
-              _currrentLocationWidget(),
-              Consumer<WeatherViewModel>(builder: (context, viewModel, child) {
-                var data = viewModel.weatherData;
-                return data != null
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          _weatherTempSec(data.currentTemperature!,
-                              data.currentWeatherIcon),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                    bottom: AppValues.basePadding)
-                                .r,
-                            child: Text(
-                              data.currentWeatherDescription.toString(),
-                              style: context.appThemeText.displayMedium,
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Container(
+              decoration: appBgBoxDecorationStyle,
+              //          child: Image.asset(
+              //   'assets/images/weather_bg.png',
+              //   fit: BoxFit.cover,
+              //   height: height,
+              //   width: width,
+              // )
+            ),
+            Column(
+              children: [
+                _cityName(),
+                _currrentLocationWidget(),
+                Consumer<WeatherViewModel>(
+                    builder: (context, viewModel, child) {
+                  var data = viewModel.weatherData;
+                  return data != null
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            _weatherTempSec(data.currentTemperature!,
+                                data.currentWeatherIcon),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                      bottom: AppValues.basePadding)
+                                  .r,
+                              child: Text(
+                                data.currentWeatherDescription.toString(),
+                                style: context.appThemeText.displayMedium,
+                              ),
                             ),
-                          ),
-                          dailyForecast(data.dailyForecasts!),
-                          _bottomStatusColumn(data)
+                            dailyForecast(data.dailyForecasts!),
+                            _bottomStatusColumn(data)
 
-                          // CustomPaint(
-                          //   size: Size(
-                          //       width,
-                          //       (width * 0.5833333333333334)
-                          //           .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                          //   painter: RPSCustomPainter(),
-                          // ),
-                        ],
-                      )
-                    : const CircularProgressIndicator(
-                        color: AppColors.appBarColor,
-                      );
-              }),
-            ],
-          )
-        ],
+                            // CustomPaint(
+                            //   size: Size(
+                            //       width,
+                            //       (width * 0.5833333333333334)
+                            //           .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                            //   painter: RPSCustomPainter(),
+                            // ),
+                          ],
+                        )
+                      : const CircularProgressIndicator(
+                          color: AppColors.appBarColor,
+                        );
+                }),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -102,37 +102,36 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
         },
       );
 
-  Widget _currrentLocationWidget() => InkWell(
-        onTap: () => _getSevenDaysWeatherList(),
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.gps_fixed),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('Current Location'),
-            )
-          ],
-        ),
-      );
+  Widget _currrentLocationWidget() => Builder(builder: (context) {
+        return InkWell(
+          onTap: () => _getSevenDaysWeatherList(),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.gps_fixed),
+              Padding(
+                padding: const EdgeInsets.all(AppValues.halfPadding).r,
+                child: Text(context.lanValue.currentLocation),
+              )
+            ],
+          ),
+        );
+      });
 
   Widget dailyForecast(List<DailyUIModel> forecastList) => SizedBox(
         height: 200,
         width: MediaQuery.of(context).size.width,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: forecastList
-              .length, // Example: Replace with the actual number of items
+          itemCount: forecastList.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: CapsuleWidget(
                 needDot: index == 0,
-                day: forecastList[index].day, // Replace with the actual day
-                icon: forecastList[index]
-                    .weatherIcon, // Replace with the actual icon URL or icon data
-                temp:
-                    "${forecastList[index].dayTemperature!.round()}°", // Replace with the actual temperature
+                day: forecastList[index].day,
+                icon: forecastList[index].weatherIcon,
+                temp: "${forecastList[index].dayTemperature!.round()}°",
               ),
             );
           },
@@ -146,11 +145,9 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
             height: 130.h,
             width: 130.w,
             child: ClipRRect(
-                // borderRadius: BorderRadius.circular(8.r),
                 child: Image.network(
               icon,
               fit: BoxFit.fill,
-              //   color: context.resources.colors.error,
             )),
           ),
           SizedBox(width: 25.w),
@@ -161,19 +158,22 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
         ],
       );
 
-  Widget _bottomStatusColumn(WeatherUIModel weatherData) => Column(
-        children: [
-          //CapsuleWidget(day: 'Today', icon: '', temp: '30'),
-          BoxTile(
-            firstTitle: 'Sunrise',
-            firstDesc: weatherData.sunrise,
-            secondTitle: 'Sunset',
-            secondDesc: weatherData.sunset,
-          ),
-          BoxTile(
-            firstTitle: 'Feels Like',
-            firstDesc: weatherData.feelsLike,
-          )
-        ],
-      );
+  Widget _bottomStatusColumn(WeatherUIModel weatherData) =>
+      Builder(builder: (context) {
+        return Column(
+          children: [
+            //CapsuleWidget(day: 'Today', icon: '', temp: '30'),
+            BoxTile(
+              firstTitle: context.lanValue.sunRise,
+              firstDesc: weatherData.sunrise,
+              secondTitle: context.lanValue.sunSet,
+              secondDesc: weatherData.sunset,
+            ),
+            BoxTile(
+              firstTitle: context.lanValue.feelsLike,
+              firstDesc: weatherData.feelsLike,
+            )
+          ],
+        );
+      });
 }

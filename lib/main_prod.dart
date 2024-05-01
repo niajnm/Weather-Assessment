@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:weather_assesment/app/base_app/base_app.dart';
 import 'package:weather_assesment/app/core/provider/provider.dart';
 import 'package:weather_assesment/app/core/services/service_locator.dart';
@@ -15,8 +16,8 @@ import 'flavors/environment.dart';
 
 void main() async {
   EnvConfig devConfig = EnvConfig(
-    appName: "Flutter Prod",
-    baseUrl: "https://api.onefish.app/",
+    appName: "Flutter Dev",
+    baseUrl: "https://api.openweathermap.org/",
     shouldCollectCrashLog: true,
   );
 
@@ -26,13 +27,13 @@ void main() async {
   );
 
   WidgetsFlutterBinding.ensureInitialized();
-
-  await dotenv.load(fileName: "conf/.env");
+  // After adding any variable in .env then enable this line
+  //await dotenv.load(fileName: "conf/.env");
 
   await GetStorage.init(databaseName);
+  await Hive.initFlutter();
 
-  // Enable it after adding firebase connection to this project
-  // await FirebaseService.enableFirebase(Environment.DEVELOPMENT);
+  await Hive.openBox<String>('json_data');
 
   await ScreenUtil.ensureScreenSize();
   await ServiceLocator.setUpServiceLocator();

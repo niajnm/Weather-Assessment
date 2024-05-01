@@ -82,7 +82,9 @@ abstract class AppValues {
   static const double height_50 = 50;
   static const double height_52 = 52;
   static const double height_150 = 150;
+  static const double height_200 = 200;
   static const double height_300 = 300;
+
   static const double horizontalCalendarHeight = 85;
 
   // FIXED DEGREE VALUES

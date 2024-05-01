@@ -20,7 +20,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
   EnvConfig devConfig = EnvConfig(
     appName: "Flutter Dev",
-    baseUrl: "https://stagefinalapi.onefish.app/",
+    baseUrl: "https://api.openweathermap.org/",
     shouldCollectCrashLog: true,
   );
 
@@ -35,22 +35,11 @@ void main() async {
 
   await GetStorage.init(databaseName);
   await Hive.initFlutter();
-   // Register adapters
-  // Hive.registerAdapter(WeatherResponseModelAdapter());
-  // Hive.registerAdapter(CurrentAdapter());
-  // Hive.registerAdapter(WeatherAdapter());
-  // Hive.registerAdapter(DailyAdapter());
-  // Hive.registerAdapter(TempAdapter());
 
-  // await Hive.openBox<WeatherResponseModel>('weather_box');
-
-  // Enable it after adding firebase connection to this project
-  // await FirebaseService.enableFirebase(Environment.DEVELOPMENT);
+  await Hive.openBox<String>('json_data');
 
   await ScreenUtil.ensureScreenSize();
   await ServiceLocator.setUpServiceLocator();
-
-  /// await LocationService().requestLocationPermission();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(MultiProvider(

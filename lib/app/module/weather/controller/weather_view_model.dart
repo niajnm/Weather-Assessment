@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:weather_assesment/app/core/services/service_locator.dart';
 import 'package:weather_assesment/app/core/values/image_values.dart';
@@ -43,6 +42,7 @@ class WeatherViewModel extends ChangeNotifier {
 
       WeatherResponseModel response =
           await _weatherRepository.getSevenDaysWeather(queryParams);
+
       WeatherUIModel weatherUIModel =
           WeatherUIModel.fromWeatherResponse(response);
 
@@ -51,6 +51,7 @@ class WeatherViewModel extends ChangeNotifier {
       notifyListeners();
     } else {
       await checklocation();
+      getWeather();
     }
   }
 

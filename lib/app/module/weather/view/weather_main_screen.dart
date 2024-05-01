@@ -68,14 +68,6 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
                             ),
                             dailyForecast(data.dailyForecasts!),
                             _bottomStatusColumn(data)
-
-                            // CustomPaint(
-                            //   size: Size(
-                            //       width,
-                            //       (width * 0.5833333333333334)
-                            //           .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                            //   painter: RPSCustomPainter(),
-                            // ),
                           ],
                         )
                       : const CircularProgressIndicator(
@@ -119,15 +111,15 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
       });
 
   Widget dailyForecast(List<DailyUIModel> forecastList) => SizedBox(
-        height: 200,
+        height: AppValues.height_200.h,
         width: MediaQuery.of(context).size.width,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: forecastList.length,
           itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: CapsuleWidget(
+            return _paddingSymHozt(
+              AppValues.halfPadding,
+              CapsuleWidget(
                 needDot: index == 0,
                 day: forecastList[index].day,
                 icon: forecastList[index].weatherIcon,
@@ -176,4 +168,7 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
           ],
         );
       });
+
+  Widget _paddingSymHozt(padding, child) => Padding(
+      padding: EdgeInsets.symmetric(horizontal: padding).r, child: child);
 }

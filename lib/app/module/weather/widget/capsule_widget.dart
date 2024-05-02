@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_assesment/app/core/values/app_colors.dart';
 import 'package:weather_assesment/app/core/values/app_values.dart';
 import 'package:weather_assesment/app/core/values/extention.dart';
 import 'package:weather_assesment/app/module/weather/widget/froster_glass.dart';
@@ -38,15 +40,19 @@ class CapsuleWidget extends StatelessWidget {
                 width: 60.w,
                 child: ClipRRect(
                     // borderRadius: BorderRadius.circular(8.r),
-                    child: Image.network(
-                  icon,
-                  fit: BoxFit.fill,
-                  //   color: context.resources.colors.error,
-                )),
+                    child: _cacheImage(icon)),
               ),
               Text(temp ?? '')
             ],
           );
         }),
+      );
+
+  Widget _cacheImage(imageUrl) => CachedNetworkImage(
+        imageUrl: imageUrl,
+        placeholder: (context, url) => const CircularProgressIndicator(
+          color: AppColors.colorWhite,
+        ),
+        errorWidget: (context, url, error) => const Icon(Icons.cloud),
       );
 }

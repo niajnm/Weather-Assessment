@@ -10,57 +10,41 @@ import 'package:weather_assesment/app/core/values/text_style.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppThemeData {
-  static ThemeData getDarkTheme(String appLanguage) {
-    return ThemeData(
-      useMaterial3: true,
-      visualDensity: VisualDensity.adaptivePlatformDensity,
-      brightness: Brightness.dark,
-      primaryColor: AppColors.colorPrimary,
-      buttonTheme: const ButtonThemeData(alignedDropdown: true),
-      cardColor: AppColors.primaryGreen05,
+static ThemeData getDarkTheme(String appLanguage) {
+  Color appBarColor = const Color.fromARGB(255, 77, 113, 255); // Replace with your app bar color
+
+  return ThemeData(
+    useMaterial3: true,
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+    brightness: Brightness.dark,
+    primaryColor: AppColors.colorPrimary, // Replace with your primary color
+    buttonTheme: const ButtonThemeData(alignedDropdown: true),
+    cardColor: AppColors.primaryGreen05, // Replace with your card color
+    iconTheme: const IconThemeData(color: AppColors.colorWhite),
+    indicatorColor: AppColors.colorWhite,
+    dividerColor: AppColors.neutralGray,
+    hintColor: AppColors.neutralLightGray,
+    dialogBackgroundColor: AppColors.pageBackgroundDark,
+    tabBarTheme: darkTabBarTheme,
+    appBarTheme: AppBarTheme(
+      systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
+        statusBarColor: appBarColor,
+        systemNavigationBarColor: appBarColor
+      ),
       iconTheme: const IconThemeData(color: AppColors.colorWhite),
-      indicatorColor: AppColors.colorWhite,
-      dividerColor: AppColors.neutralGray,
-      hintColor: AppColors.neutralLightGray,
-      dialogBackgroundColor: AppColors.pageBackgroundDark,
-      tabBarTheme: darkTabBarTheme,
-      textTheme: TextTheme(
-        displaySmall: displaySmallTextStyleDark,
-        displayMedium: displayMediumTextStyleDark,
-        displayLarge: displayLargeTextStyleDark,
-        headlineSmall: headlineSmallTextStyleDark,
-        headlineMedium: headlineMediumTextStyleDark,
-        headlineLarge: headlineLargeTextStyleDark,
-        titleSmall: titleSmallTextStyleDark,
-        titleMedium: titleMediumTextStyleDark,
-        titleLarge: titleLargeTextStyleDark,
-        bodySmall: bodySmallTextStyleDark,
-        bodyMedium: bodyMediumTextStyleDark,
-        bodyLarge: bodyLargeTextStyleDark,
-        labelSmall: labelSmallTextStyleDark,
-        labelMedium: labelMediumTextStyleDark,
-        labelLarge: labelLargeTextStyleDark,
+      backgroundColor: appBarColor,
+      titleTextStyle: pageTitleStyleDark.copyWith(
+        fontFamily: _getFont(appLanguage),
       ),
-      appBarTheme: AppBarTheme(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: AppColors.appBarColor,
-          //      Color(0xFF97ABFF),
-          //  Color(0xff123597) ,
-          statusBarIconBrightness: Brightness.light,
-        ),
-        iconTheme: const IconThemeData(color: AppColors.colorWhite),
-        backgroundColor: AppColors.appBarColor,
-        titleTextStyle:
-            pageTitleStyleDark.copyWith(fontFamily: _getFont(appLanguage)),
-      ),
-      fontFamily: _getFont(appLanguage),
-      colorScheme: ColorScheme.fromSwatch(
-        primarySwatch: AppColors.colorPrimarySwatch,
-        backgroundColor: AppColors.pageBackgroundDark,
-        brightness: Brightness.dark,
-      ),
-    );
-  }
+    ),
+    fontFamily: _getFont(appLanguage),
+    colorScheme: ColorScheme.fromSwatch(
+      primarySwatch: AppColors.colorPrimarySwatch,
+      backgroundColor: AppColors.pageBackgroundDark,
+      brightness: Brightness.dark,
+    ),
+  );
+}
 
   static ThemeData getLightTheme(String appLanguage) {
     return ThemeData(
@@ -70,29 +54,29 @@ class AppThemeData {
       primaryColor: AppColors.colorPrimary,
       cardColor: AppColors.neutralBackground,
       iconTheme: const IconThemeData(color: AppColors.primaryGreen05),
-      indicatorColor: AppColors.colorBlack,
+      indicatorColor: AppColors.colorWhite,
       buttonTheme: const ButtonThemeData(alignedDropdown: true),
       dividerColor: AppColors.neutralSeparator,
       hintColor: AppColors.neutralGray,
       dialogBackgroundColor: AppColors.pageBackground,
       tabBarTheme: lightTabBarTheme,
-      // textTheme: TextTheme(
-      //   displaySmall: displaySmallTextStyle,
-      //   displayMedium: displayMediumTextStyle,
-      //   displayLarge: displayLargeTextStyle,
-      //   headlineSmall: headlineSmallTextStyle,
-      //   headlineMedium: headlineMediumTextStyle,
-      //   headlineLarge: headlineLargeTextStyle,
-      //   titleSmall: titleSmallTextStyle,
-      //   titleMedium: titleMediumTextStyle,
-      //   titleLarge: titleLargeTextStyle,
-      //   bodySmall: bodySmallTextStyle,
-      //   bodyMedium: bodyMediumTextStyle,
-      //   bodyLarge: bodyLargeTextStyle,
-      //   labelSmall: labelSmallTextStyle,
-      //   labelMedium: labelMediumTextStyle,
-      //   labelLarge: labelLargeTextStyle,
-      // ),
+      textTheme: TextTheme(
+        // displaySmall: displaySmallTextStyle,
+        // displayMedium: displayMediumTextStyle,
+        // displayLarge: displayLargeTextStyle,
+        // headlineSmall: headlineSmallTextStyle,
+        // headlineMedium: headlineMediumTextStyle,
+        // headlineLarge: headlineLargeTextStyle,
+        // titleSmall: titleSmallTextStyle,
+        // titleMedium: titleMediumTextStyle,
+        // titleLarge: titleLargeTextStyle,
+        // bodySmall: bodySmallTextStyle,
+        // bodyMedium: bodyMediumTextStyle,
+        // bodyLarge: bodyLargeTextStyle,
+        // labelSmall: labelSmallTextStyle,
+        // labelMedium: labelMediumTextStyle,
+        // labelLarge: labelLargeTextStyle,
+      ),
       appBarTheme: AppBarTheme(
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: AppColors.appBarColor,
@@ -122,21 +106,21 @@ class AppThemeData {
         appBarStyle: FlexAppBarStyle.background,
         bottomAppBarElevation: 1.0,
         textTheme: TextTheme(
-          displaySmall: displaySmallTextStyle,
-          displayMedium: displayMediumTextStyle,
-          displayLarge: displayLargeTextStyle,
-          headlineSmall: headlineSmallTextStyle,
-          headlineMedium: headlineMediumTextStyle,
-          headlineLarge: headlineLargeTextStyle,
-          titleSmall: titleSmallTextStyle,
-          titleMedium: titleMediumTextStyle,
-          titleLarge: titleLargeTextStyle,
-          bodySmall: bodySmallTextStyle,
-          bodyMedium: bodyMediumTextStyle,
-          bodyLarge: bodyLargeTextStyle,
-          labelSmall: labelSmallTextStyle,
-          labelMedium: labelMediumTextStyle,
-          labelLarge: labelLargeTextStyle,
+          // displaySmall: displaySmallTextStyle,
+          // displayMedium: displayMediumTextStyle,
+          // displayLarge: displayLargeTextStyle,
+          // headlineSmall: headlineSmallTextStyle,
+          // headlineMedium: headlineMediumTextStyle,
+          // headlineLarge: headlineLargeTextStyle,
+          // titleSmall: titleSmallTextStyle,
+          // titleMedium: titleMediumTextStyle,
+          // titleLarge: titleLargeTextStyle,
+          // bodySmall: bodySmallTextStyle,
+          // bodyMedium: bodyMediumTextStyle,
+          // bodyLarge: bodyLargeTextStyle,
+          // labelSmall: labelSmallTextStyle,
+          // labelMedium: labelMediumTextStyle,
+          // labelLarge: labelLargeTextStyle,
         ),
         subThemesData: const FlexSubThemesData(
           blendOnLevel: 20,
@@ -259,6 +243,3 @@ class AppThemeData {
         fontFamily: GoogleFonts.notoSans().fontFamily,
       );
 }
-
-
-

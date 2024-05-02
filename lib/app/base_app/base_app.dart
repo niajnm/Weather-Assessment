@@ -28,15 +28,6 @@ class _BaseAppState extends State<BaseApp> {
     checklocation(context); // Pass the BuildContext here
   }
 
-  permission() async {
-    bool isPermissionGranted = await LocationService.isLocationPermissionGranted();
-    if (isPermissionGranted) {
-      // Location permission is granted, proceed with getting location
-    } else {
-      // Location permission is not granted, handle accordingly
-    }
-  }
-
   checklocation(BuildContext context) async {
     // Add the BuildContext parameter here
     Position? currentPosition =
@@ -57,6 +48,7 @@ class _BaseAppState extends State<BaseApp> {
       PreferenceManager.appLanguage,
       defaultValue: AppLanguage.en.name,
     );
+    
 
     final Size screenSize = MediaQuery.of(context).size;
     return ScreenUtilInit(

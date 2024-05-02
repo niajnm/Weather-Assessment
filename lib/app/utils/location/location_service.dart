@@ -44,7 +44,8 @@ class LocationService {
     Position? currentPosition;
 
     if (permission == LocationPermission.denied ||
-        permission == LocationPermission.deniedForever) {
+        permission == LocationPermission.deniedForever ||
+        permission == LocationPermission.unableToDetermine) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.whileInUse ||
           permission == LocationPermission.always) {

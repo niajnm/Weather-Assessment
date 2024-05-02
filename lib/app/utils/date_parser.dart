@@ -69,9 +69,7 @@ abstract class DateParser {
         ? DateFormat("hh:mm", localeName)
         : DateFormat("hh:mm a", localeName);
 
-    return (localeName == "bn" ? prefix : "") +
-        " " +
-        dateFormat.format(dateTime);
+    return "${localeName == "bn" ? prefix : ""} ${dateFormat.format(dateTime)}";
   }
 
   static String getLocalizedCountDownTimerString({

@@ -17,7 +17,7 @@ static final router = GoRouter(
       redirect: (context, state) async {
         bool isPermissionGranted = await LocationService.isLocationPermissionGranted();
         if (isPermissionGranted) {
-          return null; // No redirection, proceed to WeatherMainScreen
+          return RoutePaths.weatherMainPage; // No redirection, proceed to WeatherMainScreen
         } else {
           // Location permission is not granted, redirect to another page
           return "/"; // Redirect to the initial location

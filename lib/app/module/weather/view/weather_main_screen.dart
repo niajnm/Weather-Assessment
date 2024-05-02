@@ -1,4 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:weather_assesment/app/core/values/app_colors.dart';
 import 'package:weather_assesment/app/core/values/app_values.dart';
 import 'package:weather_assesment/app/core/values/extention.dart';
@@ -9,7 +12,7 @@ import 'package:weather_assesment/app/module/weather/widget/box_tile.dart';
 import 'package:weather_assesment/app/module/weather/widget/capsule_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import '../ui_model/weather_ui_model copy.dart';
+import '../ui_model/weather_ui_model.dart';
 
 class WeatherMainScreen extends StatefulWidget {
   const WeatherMainScreen({super.key});
@@ -35,15 +38,7 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
       child: Scaffold(
         body: Stack(
           children: [
-            Container(
-              decoration: appBgBoxDecorationStyle,
-              //          child: Image.asset(
-              //   'assets/images/weather_bg.png',
-              //   fit: BoxFit.cover,
-              //   height: height,
-              //   width: width,
-              // )
-            ),
+            _appBackground(),
             Column(
               children: [
                 _cityName(),
@@ -57,21 +52,15 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
                           children: [
                             _weatherTempSec(data.currentTemperature!,
                                 data.currentWeatherIcon),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                      bottom: AppValues.basePadding)
-                                  .r,
-                              child: Text(
-                                data.currentWeatherDescription.toString(),
-                                style: context.appThemeText.displayMedium,
-                              ),
-                            ),
-                            dailyForecast(data.dailyForecasts!),
+                            _weatherDescription(data),
+                            _dailyForecast(data.dailyForecasts!),
                             _bottomStatusColumn(data)
                           ],
                         )
-                      : const CircularProgressIndicator(
-                          color: AppColors.appBarColor,
+                      : const Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.appBarColor,
+                          ),
                         );
                 }),
               ],
@@ -82,13 +71,17 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
     );
   }
 
+  Widget _appBackground() => Container(
+        decoration: appBgBoxDecorationStyle,
+      );
+
   Widget _cityName() => Consumer<WeatherViewModel>(
         builder: (context, viewModel, child) {
           return Padding(
             padding: const EdgeInsets.fromLTRB(0.0, 20, 0, 15).r,
             child: Text(
               viewModel.cityName!,
-              style: context.appThemeText.displayLarge,
+              style: context.appThemeText.headlineMedium,
             ),
           );
         },
@@ -110,7 +103,15 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
         );
       });
 
-  Widget dailyForecast(List<DailyUIModel> forecastList) => SizedBox(
+  Widget _weatherDescription(WeatherUIModel data) => Padding(
+        padding: const EdgeInsets.only(bottom: AppValues.basePadding * 2).r,
+        child: Text(
+          "${data.currentWeatherDescription} - ${data.uvi}",
+          style: context.appThemeText.headlineSmall,
+        ),
+      );
+
+  Widget _dailyForecast(List<DailyUIModel> forecastList) => SizedBox(
         height: AppValues.height_200.h,
         width: MediaQuery.of(context).size.width,
         child: ListView.builder(
@@ -137,24 +138,30 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
             height: 130.h,
             width: 130.w,
             child: ClipRRect(
-                child: Image.network(
-              icon,
-              fit: BoxFit.fill,
-            )),
+              child: _cacheImage(icon),
+            ),
           ),
-          SizedBox(width: 25.w),
+          SizedBox(width: AppValues.height_25.w),
           Text(
             '$temp°',
-            style: headlineLargeTextStyle.copyWith(fontSize: 80),
+            style: context.appThemeText.displayLarge
+                ?.copyWith(fontSize: AppValues.fontSize_80.sp),
           )
         ],
+      );
+
+  Widget _cacheImage(imageUrl) => CachedNetworkImage(
+        imageUrl: imageUrl,
+        placeholder: (context, url) => const CircularProgressIndicator(
+          color: AppColors.colorWhite,
+        ),
+        errorWidget: (context, url, error) => const Icon(Icons.close),
       );
 
   Widget _bottomStatusColumn(WeatherUIModel weatherData) =>
       Builder(builder: (context) {
         return Column(
           children: [
-            //CapsuleWidget(day: 'Today', icon: '', temp: '30'),
             BoxTile(
               firstTitle: context.lanValue.sunRise,
               firstDesc: weatherData.sunrise,

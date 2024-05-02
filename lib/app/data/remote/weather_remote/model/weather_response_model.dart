@@ -1,6 +1,6 @@
 class WeatherResponseModel {
-  double? lat;
-  double? lon;
+  dynamic lat;
+  dynamic lon;
   String? timezone;
   int? timezoneOffset;
   Current? current;

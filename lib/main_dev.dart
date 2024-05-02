@@ -6,11 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:weather_assesment/app/base_app/base_app.dart';
 import 'package:weather_assesment/app/core/provider/provider.dart';
 import 'package:weather_assesment/app/core/services/service_locator.dart';
-import 'package:weather_assesment/app/data/remote/weather_remote/model/weather_hive_adapter.dart';
-import 'package:weather_assesment/app/data/remote/weather_remote/model/weather_response_model.dart';
-// import 'app/core/services/firebase_service.dart';
-// import 'app/core/services/service_locator.dart';
-// import 'app/data/local/preference/preference_manager.dart';
+import 'package:weather_assesment/app/core/values/app_colors.dart';
 import 'app/utils/constants.dart';
 import 'flavors/build_config.dart';
 import 'flavors/env_config.dart';
@@ -42,6 +38,9 @@ void main() async {
   await ServiceLocator.setUpServiceLocator();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: AppColors.appBarColor,
+      systemNavigationBarColor: AppColors.appBarColor2));
   runApp(MultiProvider(
       providers: ProviderPath.providersList, child: const BaseApp()));
 }

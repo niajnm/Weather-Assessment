@@ -16,7 +16,9 @@ abstract class AppColors {
   static const Color accentRed = Color(0xFFED4D4D);
   static const Color almostBlack = Color(0xFF1F3541);
   static const Color appBarColor =    Color(0xFF97ABFF);
-  static const Color appBarColor2 =    Color.fromARGB(192, 151, 172, 255);
+  static const Color primary =    Color(0xFF97ABFF);
+  static const Color appBarColor2 =    Color.fromARGB(239, 41, 75, 167);
+
      //  Color(0xff123597) ;
   static const Color appBarColorDark = primaryGreen05;
   static const Color appBarIconColor = primaryGreen05;
@@ -31,7 +33,7 @@ abstract class AppColors {
   static const Color colorBlack = Color(0xFF000000);
   static const Color colorDark = Color(0xFF323232);
   static const Color colorLightGreen = Color(0xFF00EFA7);
-  static const Color colorPrimary = Color(0xFF55C595);
+  static const Color colorPrimary = Color(0xFF97ABFF);
   static const Color colorPrimaryDark = Color(0xFF359D9E);
   static const Color colorWhite = Color(0xFFFFFFFF);
   static const Color dataTitleLabelColor = Color(0xFFA0ABB4);

@@ -1,7 +1,6 @@
 name: weather_assesment 
 description: A new Flutter project.
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
+
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
@@ -14,7 +13,6 @@ dependencies:
     sdk: flutter
 
   animations: 2.0.7
-  cached_network_image: 3.2.3
   carousel_slider: 4.2.1
   circular_countdown_timer: 0.2.3
   cupertino_icons: 1.0.5
@@ -52,8 +50,8 @@ dependencies:
   lottie: 2.6.0
   package_info_plus: 4.1.0
   path_provider: 2.1.0
-  path: 1.8.3
-  #path: 1.9.0
+ # path: 1.8.3
+  path: 1.9.0
   pretty_dio_logger: ^1.2.0-beta-1
   scrollable_positioned_list: 0.3.8
   share_plus: 7.1.0
@@ -69,17 +67,15 @@ dependencies:
   connectivity: ^3.0.6
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  build_runner: ^2.1.11
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  cached_network_image: ^3.3.1
+  
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  hive_generator: ^1.1.2
+  build_runner: ^2.1.7
+
 
 
 flutter:

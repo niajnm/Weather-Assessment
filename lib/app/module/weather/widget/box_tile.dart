@@ -24,10 +24,10 @@ class BoxTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(40.0, AppValues.basePadding, 40, 0),
+      padding: const EdgeInsets.fromLTRB(20.0, AppValues.basePadding, 20, 0).r,
       child: Container(
         decoration: glassBoxDecorationStyle,
-        height: 90.h,
+        height: AppValues.height_200 * 0.4.h,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -37,7 +37,7 @@ class BoxTile extends StatelessWidget {
               children: [
                 Icon(
                   icon ?? Icons.sunny_snowing,
-                  size: 50,
+                  size: AppValues.iconSize_50.r,
                 ),
                 _infoColumn(firstTitle, firstDesc),
                 _infoColumn(secondTitle, secondDesc)
@@ -49,11 +49,18 @@ class BoxTile extends StatelessWidget {
     );
   }
 
-  Widget _infoColumn(title, desc) => Builder(
-    builder: (context) {
-      return Column(
-            children: [Text(title ?? '' , style:context.appThemeText.headlineSmall,), Text(desc ?? '', style:context.appThemeText.displayMedium,)],
-          );
-    }
-  );
+  Widget _infoColumn(title, desc) => Builder(builder: (context) {
+        return Column(
+          children: [
+            Text(
+              title ?? '',
+              style: context.appThemeText.bodyLarge,
+            ),
+            Text(
+              desc ?? '',
+              style: context.appThemeText.titleLarge,
+            )
+          ],
+        );
+      });
 }

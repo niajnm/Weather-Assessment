@@ -77,6 +77,7 @@ abstract class AppValues {
 
   // FIXED HEIGHT VALUES
   static const double height_16 = 16;
+  static const double height_25 = 25;
   static const double height_42 = 42;
   static const double height_48 = 48;
   static const double height_50 = 50;
@@ -229,6 +230,7 @@ abstract class AppValues {
   static const double fontSize_32 = 32;
   static const double fontSize_40 = 40;
   static const double fontSize_48 = 48;
+  static const double fontSize_80 = 80;
 
   // GENERIC FONT
   static double baseFontSize = 16.0.sp;

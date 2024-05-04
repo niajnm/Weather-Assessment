@@ -54,9 +54,10 @@ lib
   <li><strong>Geolocator</strong> Implement location services to automatically determine the user's location (latitude and longitude).</li>
     <li><strong>Provider for State Management:</strong> Utilize the Provider package for state management.</li>
   <li><strong>Service locator:</strong> Decouple the interface(abstract base class) from a concreate implementation.</li>
-    <li><strong>Singleton:</strong> Dio and env setup implemented i singleton.</li>
+    <li><strong>Singleton:</strong> Dio and env setup implemented in singleton.</li>
+     <li><strong>Theme:</strong> Duel theme setup by system theme.</li>
     
-        <li><strong>Theme:</strong> Duel theme setup by system theme.</li>
+    
 </ul>
 
 

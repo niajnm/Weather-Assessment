@@ -2,6 +2,10 @@
 
 <p>This project follows a structured architecture inspired by MVVM (Model-View-ViewModel) principles to enhance maintainability and scalability. It is organized into different directories, each serving a specific purpose.</p>
 
+
+
+<h2>Download Apk <a href="https://drive.google.com/drive/folders/1xvTwNib3G8GTwGqVN4OY0iRGeSscObnF?usp=sharing">Google Drive</a>.</h2>
+
 <h2>Project Structure</h2>
 
 <pre>
@@ -21,7 +25,7 @@ lib
 |   |   |-- home
 |   |   |   |-- view
 |   |   |   |-- controller
-|   |   |-- details
+|   |   |-- weather
 |   |   |   |-- view
 |   |   |   |-- controller
 |   |-- network
@@ -102,6 +106,10 @@ lib
   <li>Install dependencies:</li>
 
   <pre><code>flutter pub get</code></pre>
+
+  <li>Run this command:</li>
+
+  <pre><code>flutter gen-l10n</code></pre>
 
   <li>Run the app:</li>
 

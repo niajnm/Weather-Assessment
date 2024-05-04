@@ -99,9 +99,9 @@ lib
 
   <pre><code>git clone https://github.com/niajnm/Weather-Assessment.git</code></pre>
 
-  <li>Switch to the appropriate branch (e.g., <code>develop</code>):</li>
+  <li>Switch to the appropriate branch (e.g., <code>main</code>):</li>
 
-  <pre><code>git checkout develop</code></pre>
+  <pre><code>git checkout main</code></pre>
 
   <li>Install dependencies:</li>
 

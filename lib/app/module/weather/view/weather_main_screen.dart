@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:weather_assesment/app/core/values/app_colors.dart';
 import 'package:weather_assesment/app/core/values/app_values.dart';
 import 'package:weather_assesment/app/core/values/extention.dart';
@@ -78,7 +76,7 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
   Widget _cityName() => Consumer<WeatherViewModel>(
         builder: (context, viewModel, child) {
           return Padding(
-            padding: const EdgeInsets.fromLTRB(0.0, 20, 0, 15).r,
+            padding: const EdgeInsets.only(top: 20, bottom: 15).r,
             child: Text(
               viewModel.cityName!,
               style: context.appThemeText.headlineMedium,
@@ -135,7 +133,7 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            height: 130.h,
+            height: 140.h,
             width: 130.w,
             child: ClipRRect(
               child: _cacheImage(icon),
@@ -152,6 +150,7 @@ class _WeatherMainScreenState extends State<WeatherMainScreen> {
 
   Widget _cacheImage(imageUrl) => CachedNetworkImage(
         imageUrl: imageUrl,
+        fit: BoxFit.fill,
         placeholder: (context, url) => const CircularProgressIndicator(
           color: AppColors.colorWhite,
         ),

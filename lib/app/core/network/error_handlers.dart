@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:get/get_connect/http/src/status/http_status.dart';
 import 'package:dio/dio.dart';
+import 'package:weather_assesment/flavors/build_config.dart';
 
 import 'exceptions/api_exception.dart';
 import 'exceptions/app_exception.dart';
@@ -10,8 +11,8 @@ import 'exceptions/not_found_exception.dart';
 import 'exceptions/service_unavailable_exception.dart';
 
 Exception handleError(String error) {
-  //final logger = BuildConfig.instance.config.logger;
-  // logger.e("Generic exception: $error");
+  final logger = BuildConfig.instance.config.logger;
+  logger.e("Generic exception: $error");
 
   return AppException(message: error);
 }
@@ -48,9 +49,6 @@ Exception _parseDioErrorResponse(DioError dioError) {
     status = dioError.response?.data["status"];
     serverMessage = dioError.response?.data["message"];
   } catch (e) {
-    //logger.i("$e");
-    // logger.i(s.toString());
-
     serverMessage = "Something went wrong. Please try again later.";
   }
 

@@ -8,7 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import '../../../flavors/build_config.dart';
 
 abstract class BaseRemoteSource {
-  Dio get dioCli => DioProvider.dioGetApi;
+  Dio get dioCli => DioProvider.httpDio;
   Dio get dioClientAuth => DioProvider.dioWithHeaderToken;
   Dio get dioWithCacheClient => DioProvider.httpDioWithCache;
 
@@ -21,7 +21,7 @@ abstract class BaseRemoteSource {
       if (response.statusCode != HttpStatus.ok ||
           (response.data as Map<String, dynamic>)['statusCode'] !=
               HttpStatus.ok) {
-      // logger.log(level, message)
+        // logger.log(level, message)
       }
 
       return response;

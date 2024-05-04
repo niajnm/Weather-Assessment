@@ -17,7 +17,6 @@ class WeatherViewModel extends ChangeNotifier {
   WeatherUIModel? weatherData;
 
   checklocation() async {
-    // Add the BuildContext parameter here
     Position? currentPosition =
         await LocationService.getLocationWithPermissionCheck();
     if (currentPosition != null) {

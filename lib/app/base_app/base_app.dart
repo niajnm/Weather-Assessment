@@ -25,7 +25,7 @@ class _BaseAppState extends State<BaseApp> {
   @override
   void initState() {
     super.initState();
-    checklocation(context); // Pass the BuildContext here
+    // checklocation(context); // Pass the BuildContext here
   }
 
   checklocation(BuildContext context) async {
@@ -48,7 +48,6 @@ class _BaseAppState extends State<BaseApp> {
       PreferenceManager.appLanguage,
       defaultValue: AppLanguage.en.name,
     );
-    
 
     final Size screenSize = MediaQuery.of(context).size;
     return ScreenUtilInit(

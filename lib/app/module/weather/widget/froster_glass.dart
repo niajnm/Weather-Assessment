@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:ui';
+
+import 'package:weather_assesment/app/core/values/app_values.dart';
 
 // ignore: must_be_immutable
 class FrostedGlassBox extends StatelessWidget {
@@ -27,13 +30,9 @@ class FrostedGlassBox extends StatelessWidget {
                 width: theWidth,
                 height: theHeight,
                 color: Colors.transparent,
-                //we use Stack(); because we want the effects be on top of each other,
-                //  just like layer in photoshop.
                 child: Stack(
                   children: [
-                    //blur effect ==> the third layer of stack
                     _filterEffect(),
-                    //gradient effect ==> the second layer of stack
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
@@ -50,24 +49,23 @@ class FrostedGlassBox extends StatelessWidget {
                             ]),
                       ),
                     ),
-                    //child ==> the first/top layer of stack
                     Center(child: theChild),
                   ],
                 ),
               ),
             ),
-            dotEnable ? dotWhite() : SizedBox.shrink()
+            dotEnable ? dotWhite() : const SizedBox.shrink()
           ],
         ),
       ],
     );
   }
 
-  Widget dotWhite() => const Padding(
-        padding: EdgeInsets.all(8.0),
+  Widget dotWhite() => Padding(
+        padding: const EdgeInsets.all(AppValues.halfPadding).r,
         child: Card(
           child: CircleAvatar(
-            radius: 8,
+            radius: 8.r,
             backgroundColor: Colors.white,
           ),
         ),
@@ -75,13 +73,9 @@ class FrostedGlassBox extends StatelessWidget {
 
   BackdropFilter _filterEffect() => BackdropFilter(
         filter: ImageFilter.blur(
-          //sigmaX is the Horizontal blur
           sigmaX: 4.0,
-          //sigmaY is the Vertical blur
           sigmaY: 4.0,
         ),
-        //we use this container to scale up the blur effect to fit its
-        //  parent, without this container the blur effect doesn't appear.
         child: Container(),
       );
 }

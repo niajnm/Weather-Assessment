@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:weather_assesment/app/core/values/app_gradients.dart';
-
 import 'app_colors.dart';
 import 'text_style.dart';
 

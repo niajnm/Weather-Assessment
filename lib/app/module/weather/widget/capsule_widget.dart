@@ -38,9 +38,7 @@ class CapsuleWidget extends StatelessWidget {
               SizedBox(
                 height: 60.h,
                 width: 60.w,
-                child: ClipRRect(
-                    // borderRadius: BorderRadius.circular(8.r),
-                    child: _cacheImage(icon)),
+                child: ClipRRect(child: _cacheImage(icon)),
               ),
               Text(temp ?? '')
             ],

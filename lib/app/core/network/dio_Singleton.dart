@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:dio_http_cache/dio_http_cache.dart';
+//import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:weather_assesment/app/core/network/pretty_dio_logger.dart';
 import 'package:weather_assesment/app/core/network/request_headers.dart';
 import 'package:weather_assesment/flavors/build_config.dart';
 
 class DioProvider {
-  static final String baseUrl = '${BuildConfig.instance.config.baseUrl}api/';
+  static final String baseUrl = BuildConfig.instance.config.baseUrl;
 
   static Dio? _instance;
 
@@ -62,7 +62,6 @@ class DioProvider {
   static Dio get httpDioWithCache {
     if (_instance == null) {
       _instance = Dio(_options);
-
       _addInterceptorsWithCache();
 
       return _instance!;
@@ -86,18 +85,11 @@ class DioProvider {
     _instance!.interceptors.add(_prettyDioLogger);
   }
 
-  static final dioCacheManager = DioCacheManager(CacheConfig()).interceptor;
-
   static _addInterceptorsWithCache() {
     _instance ??= httpDio;
     _instance!.interceptors.clear();
     _instance!.interceptors.add(RequestHeaderInterceptor());
     _instance!.interceptors.add(_prettyDioLogger);
-    _instance!.interceptors.add(dioCacheManager);
-  }
-
-  static clearCache() {
-    DioCacheManager(CacheConfig(baseUrl: baseUrl)).clearAll();
   }
 
   static String _buildContentType(String version) {

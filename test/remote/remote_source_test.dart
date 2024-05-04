@@ -1,97 +1,98 @@
-// import 'dart:io';
+import 'package:dio/dio.dart';
 
-// import 'package:dio/dio.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
+import 'package:logger/logger.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:weather_assesment/app/data/remote/end_point_api.dart';
+import 'package:weather_assesment/app/data/remote/weather_remote/model/weather_params.dart';
+import 'package:weather_assesment/app/data/remote/weather_remote/model/weather_response_model.dart';
+import 'package:weather_assesment/app/data/remote/weather_remote/weather_remote_source_impl.dart';
+import 'package:weather_assesment/app/utils/constants.dart';
+import 'package:weather_assesment/flavors/build_config.dart';
+import 'package:weather_assesment/flavors/env_config.dart';
+import 'package:weather_assesment/flavors/environment.dart';
+import 'remote_source_test.mocks.dart';
 
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:mockito/annotations.dart';
-// import 'package:mockito/mockito.dart';
-// import 'package:flutter_assessment/app/utils/constants.dart';
-// import 'package:logger/logger.dart';
+@GenerateMocks([Dio])
+void main() {
+  WeatherRemoteSourceImpl remoteDataSource = WeatherRemoteSourceImpl();
+  final MockDio mockDio = MockDio();
 
-// import '../../lib/flavors/build_config.dart';
-// import '../../lib/flavors/env_config.dart';
-// import '../../lib/flavors/environment.dart';
-// import 'remote_source_test.mocks.dart';
+  group('fetchRepositoryList', () {
+    final params = WeatherParams(lat: '23.716103', lon: '90.4751949');
 
-// @GenerateMocks([Dio])
-// void main() {
-//   // Call the setup function before running tests
-//   setUp(() {
-//     setupBuildConfigForTesting();
-//   });
-//   MockDio dio = MockDio();
+    test(
+        'returns a WeatherResponseModel if the http call completes successfully',
+        () async {
+      final responseData = {
+        "lat": 23.7161,
+        "lon": 90.4752,
+        "timezone": "Asia/Dhaka",
+        "current": {
+          "dt": 1714865027,
+          "temp": 25.03,
+          // Add other fields here
+        },
+        "daily": [
+          {
+            "dt": 1714885200,
+            "temp": {
+              "day": 36.08,
+              // Add other fields here
+            },
+            // Add other fields here
+          },
+          // Add other daily data here
+        ]
+      };
 
-//   GitHubRepositoryRemoteSourceImpl remoteDataSource =
-//       GitHubRepositoryRemoteSourceImpl();
+      // Mock the Dio client's response
+      when(mockDio.get(
+        weatherBaseUrl,
+        queryParameters: anyNamed('queryParameters'),
+      )).thenAnswer((_) async => Response(
+          data: responseData,
+          statusCode: 200,
+          requestOptions: RequestOptions(path: weatherBaseUrl)));
 
-//   group('fetchRepositoryList', () {
-//     final params = GitHubRepositoryParams(sortBy: "stars", pageNo: 1);
+      // Call the method under test
+      final result = await remoteDataSource.getSevenDaysWeather(params);
 
-//     test('returns an RepositoryList if the http call completes successfully',
-//         () async {
-//       final responseData = {
-//         "items": [
-//           {
-//             "id": 425832081,
-//             "name": "FlutterWorkshop",
-//             "full_name": "hasnain40247/FlutterWorkshop",
-//             "owner": {
-//               "login": "hasnain40247",
-//               "avatar_url":
-//                   "https://avatars.githubusercontent.com/u/52504037?v=4"
-//             },
-//             "updated_at": "2021-11-11T11:42:31Z",
-//             "language": "Dart"
-//           }
-//         ]
-//       };
+      // Verify result
+      expect(result, isA<WeatherResponseModel>());
+      // Add more assertions here to verify the structure and data of the response
+    });
+  });
+}
 
-//       final fakeResponse = Response(
-//         data: responseData,
-//         requestOptions: RequestOptions(),
-//       );
+void setupBuildConfigForTesting() {
+  // Initialize BuildConfig with test configurations
+  EnvConfig testConfig = EnvConfig(
+    appName: "Your Test App",
+    baseUrl: "https://api.openweathermap.org/",
+    shouldCollectCrashLog: false,
+  );
 
-//       // Use Mockito to return fake response when Dio's get() is called
-//       when(dio.get('https://api.github.com/search/repositories',
-//               queryParameters: anyNamed('queryParameters')))
-//           .thenAnswer((_) async => fakeResponse);
+  Logger(
+    printer: PrettyPrinter(
+        methodCount: loggerMethodCount,
+        // number of method calls to be displayed
+        errorMethodCount: loggerErrorMethodCount,
+        // number of method calls if stacktrace is provided
+        lineLength: loggerLineLength,
+        // width of the output
+        colors: true,
+        // Colorful log messages
+        printEmojis: true,
+        // Print an emoji for each log message
+        printTime: false // Should each log print contain a timestamp
+        ),
+  );
 
-//       // Call the method under test
-//       final result = await remoteDataSource.getRepositoryList(params);
-
-//       // Verify result
-//       expect(result, isA<RemoteGitHubRepositoryResponse>());
-//       expect(result.items!.length, equals(10));
-//     });
-//   });
-// }
-
-// void setupBuildConfigForTesting() {
-//   // Initialize BuildConfig with test configurations
-//   EnvConfig testConfig = EnvConfig(
-//     appName: "Your Test App",
-//     baseUrl: "https://api.github.com/",
-//     shouldCollectCrashLog: false,
-//   );
-
-//   Logger(
-//     printer: PrettyPrinter(
-//         methodCount: loggerMethodCount,
-//         // number of method calls to be displayed
-//         errorMethodCount: loggerErrorMethodCount,
-//         // number of method calls if stacktrace is provided
-//         lineLength: loggerLineLength,
-//         // width of the output
-//         colors: true,
-//         // Colorful log messages
-//         printEmojis: true,
-//         // Print an emoji for each log message
-//         printTime: false // Should each log print contain a timestamp
-//         ),
-//   );
-
-//   BuildConfig.instantiate(
-//     envType: Environment.PRODUCTION,
-//     envConfig: testConfig,
-//   );
-// }
+  BuildConfig.instantiate(
+    envType: Environment.PRODUCTION,
+    envConfig: testConfig,
+  );
+}

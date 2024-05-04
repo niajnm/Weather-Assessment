@@ -32,7 +32,6 @@ class WeatherRepositoryImpl implements WeatherRepository {
   Future<WeatherResponseModel> _parseSevenDaysWeatherResponseFromHive() async {
     var box = await Hive.openBox<String>('json_data');
     String? storedJsonData = box.get('data');
-    print('Stored JSON Data: $storedJsonData');
 
     // Close the box when done with it
     //await box.close();
@@ -49,7 +48,7 @@ class WeatherRepositoryImpl implements WeatherRepository {
   Future<WeatherResponseModel> _parseSevenDaysWeatherResponse(
       Response<dynamic> response) async {
     var box = await Hive.openBox<String>('json_data');
-    
+
     await box.clear();
     String jsonData = "$response";
     await box.put('data', jsonData);

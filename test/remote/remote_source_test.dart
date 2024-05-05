@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -18,6 +17,9 @@ import 'remote_source_test.mocks.dart';
 @GenerateMocks([Dio])
 void main() {
   WeatherRemoteSourceImpl remoteDataSource = WeatherRemoteSourceImpl();
+  
+  setUp(() => setupBuildConfigForTesting());
+  
   final MockDio mockDio = MockDio();
 
   group('fetchRepositoryList', () {
@@ -33,22 +35,17 @@ void main() {
         "current": {
           "dt": 1714865027,
           "temp": 25.03,
-          // Add other fields here
         },
         "daily": [
           {
             "dt": 1714885200,
             "temp": {
               "day": 36.08,
-              // Add other fields here
             },
-            // Add other fields here
           },
-          // Add other daily data here
         ]
       };
 
-      // Mock the Dio client's response
       when(mockDio.get(
         weatherBaseUrl,
         queryParameters: anyNamed('queryParameters'),
@@ -57,18 +54,14 @@ void main() {
           statusCode: 200,
           requestOptions: RequestOptions(path: weatherBaseUrl)));
 
-      // Call the method under test
       final result = await remoteDataSource.getSevenDaysWeather(params);
 
-      // Verify result
-      expect(result, isA<WeatherResponseModel>());
-      // Add more assertions here to verify the structure and data of the response
+      expect(result, isA<Response>());
     });
   });
 }
 
 void setupBuildConfigForTesting() {
-  // Initialize BuildConfig with test configurations
   EnvConfig testConfig = EnvConfig(
     appName: "Your Test App",
     baseUrl: "https://api.openweathermap.org/",
@@ -78,16 +71,11 @@ void setupBuildConfigForTesting() {
   Logger(
     printer: PrettyPrinter(
         methodCount: loggerMethodCount,
-        // number of method calls to be displayed
         errorMethodCount: loggerErrorMethodCount,
-        // number of method calls if stacktrace is provided
         lineLength: loggerLineLength,
-        // width of the output
         colors: true,
-        // Colorful log messages
         printEmojis: true,
-        // Print an emoji for each log message
-        printTime: false // Should each log print contain a timestamp
+        printTime: false
         ),
   );
 

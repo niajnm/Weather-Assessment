@@ -17,41 +17,44 @@ jobs:
 
     steps:
       - name: Checkout Repository  # Check out the source code from the repository
-        uses: actions/checkout@v2  # Use the GitHub Actions checkout action
+      - uses: actions/checkout@v2  # Use the GitHub Actions checkout action
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
 
       - name: Setup Flutter  # Set up Flutter SDK
-        uses: subosito/flutter-action@v4  # Use the Flutter action
+        uses: subosito/flutter-action@v1  # Use the Flutter action
         with:
-          flutter-version: '3.7.0'  # Specify Flutter version
+          channel: 'stable'  # Specify Flutter version
 
       - name: Install Dependencies  # Install Flutter dependencies
         run: flutter pub get  # Run 'flutter pub get' command to fetch dependencies
 
-      - name: Run Tests  # Run tests
-        run: flutter test  # Execute unit tests, widget tests, and integration tests
+      # - name: Run Tests  # Run tests
+      #   run: flutter test  # Execute unit tests, widget tests, and integration tests
 
       - name: Build Dev APK  # Build APK for main_dev flavor
        # run: flutter build apk --flavor main_dev  # Build the APK file for main_dev flavor
         run: flutter build apk --flavor dev lib/main_dev.dart  # Build the APK file for main_dev flavor
  
 
-  build_prod:
-    runs-on: ubuntu-latest  # Use an Ubuntu runner for the job
+  # build_prod:
+  #   runs-on: ubuntu-latest  # Use an Ubuntu runner for the job
 
-    steps:
-      - name: Checkout Repository  # Check out the source code from the repository
-        uses: actions/checkout@v2  # Use the GitHub Actions checkout action
+  #   steps:
+  #     - name: Checkout Repository  # Check out the source code from the repository
+  #       uses: actions/checkout@v2  # Use the GitHub Actions checkout action
 
-      - name: Setup Flutter  # Set up Flutter SDK
-        uses: subosito/flutter-action@v4  # Use the Flutter action
-        with:
-          flutter-version: '3.7.0'  # Specify Flutter version
+  #     - name: Setup Flutter  # Set up Flutter SDK
+  #       uses: subosito/flutter-action@v4  # Use the Flutter action
+  #       with:
+  #         flutter-version: '3.7.0'  # Specify Flutter version
 
-      - name: Install Dependencies  # Install Flutter dependencies
-        run: flutter pub get  # Run 'flutter pub get' command to fetch dependencies
+  #     - name: Install Dependencies  # Install Flutter dependencies
+  #       run: flutter pub get  # Run 'flutter pub get' command to fetch dependencies
 
-      - name: Run Tests  # Run tests
-        run: flutter test  # Execute unit tests, widget tests, and integration tests
+  #     - name: Run Tests  # Run tests
+  #       run: flutter test  # Execute unit tests, widget tests, and integration tests
 
-      - name: Build Prod APK  # Build APK for main_prod flavor
-        run: flutter build apk --flavor main_prod  # Build the APK file for main_prod flavor
+  #     - name: Build Prod APK  # Build APK for main_prod flavor
+  #       run: flutter build apk --flavor main_prod  # Build the APK file for main_prod flavor

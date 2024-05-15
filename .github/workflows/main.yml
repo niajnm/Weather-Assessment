@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v2  # Use the GitHub Actions checkout action
 
       - name: Setup Flutter  # Set up Flutter SDK
-        uses: subosito/flutter-action@v2  # Use the Flutter action
+        uses: subosito/flutter-action@v4  # Use the Flutter action
         with:
           flutter-version: '3.7.0'  # Specify Flutter version
 
@@ -31,9 +31,9 @@ jobs:
         run: flutter test  # Execute unit tests, widget tests, and integration tests
 
       - name: Build Dev APK  # Build APK for main_dev flavor
-        run: flutter build apk --flavor main_dev  # Build the APK file for main_dev flavor
-      # run: flutter build apk --flavor dev lib/main_dev.dart  # Build the APK file for main_dev flavor
-
+       # run: flutter build apk --flavor main_dev  # Build the APK file for main_dev flavor
+        run: flutter build apk --flavor dev lib/main_dev.dart  # Build the APK file for main_dev flavor
+ 
 
   build_prod:
     runs-on: ubuntu-latest  # Use an Ubuntu runner for the job
@@ -43,7 +43,7 @@ jobs:
         uses: actions/checkout@v2  # Use the GitHub Actions checkout action
 
       - name: Setup Flutter  # Set up Flutter SDK
-        uses: subosito/flutter-action@v2  # Use the Flutter action
+        uses: subosito/flutter-action@v4  # Use the Flutter action
         with:
           flutter-version: '3.7.0'  # Specify Flutter version
 

@@ -6,6 +6,16 @@ class HiveManagerImpl implements HiveManager {
 
   HiveManagerImpl(this._box);
 
+  //  late Box<String> _box; // Declare _box as late
+
+  // HiveManagerImpl() {
+  //   _initializeBox(); // Call _initializeBox in the constructor
+  // }
+
+  // Future<void> _initializeBox() async {
+  //   _box = await Hive.openBox<String>('json_data'); // Initialize _box
+  // }
+
   @override
   String getString(String key, {String defaultValue = ""}) =>
       _box.get(key, defaultValue: defaultValue) as String;

@@ -30,7 +30,7 @@ class WeatherRepositoryImpl implements WeatherRepository {
   }
 
   Future<WeatherResponseModel> _parseSevenDaysWeatherResponseFromHive() async {
-    var box = await Hive.openBox<String>('json_data');
+    var box = await Hive.openBox<String>('json_data'); 
     String? storedJsonData = box.get('data');
 
     // Close the box when done with it
